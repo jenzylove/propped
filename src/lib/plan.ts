@@ -85,7 +85,7 @@ const TOOLS: ToolDef[] = [
     type: "function",
     function: {
       name: "choose_placements",
-      description: "Pick up to 4 shows to pitch for product placement, only from the placeable list (running or awaiting renewal, live action). For each, one sentence a founder would understand on why it fits: what about the show and its viewers matches the brand (genre, tone, audience fit, made for this brand). Never mention status or field names.",
+      description: "Pick up to 4 shows to pitch for product placement, only from the placeable list (running or awaiting renewal, live action). For each, one sentence a founder would understand on why it fits: what about the show and its viewers matches the brand (genre, tone, audience fit, made for this brand). Never mention status or field names. If you mention the audience, use exactly the audience wording from the user message; never restate ages differently.",
       parameters: {
         type: "object",
         properties: { picks: { type: "array", items: { type: "object", properties: { show: { type: "string" }, why: { type: "string" } }, required: ["show", "why"] } } },
@@ -162,7 +162,7 @@ export async function runPlan(brand: string, emit: (s: Step) => void): Promise<P
       role: "system",
       content: `You plan how a small brand gets its product onto the TV shows its customers watch. Work only through the tools, in order: read_shows, choose_placements, plan_ads, finish. Use only facts the tools return. Plain words, no dashes.`,
     },
-    { role: "user", content: `Brand: ${data.brand.name}. Customer audience: ages ${audience.ages.join(", ") || "not known"}, ${audience.gender}.` },
+    { role: "user", content: `Brand: ${data.brand.name}. Customer audience (use this exact wording if you mention it): ages ${audience.ages.join(", ") || "not known"}, ${audience.gender}.` },
   ];
 
   for (let turn = 0; turn < 8 && !done; turn++) {

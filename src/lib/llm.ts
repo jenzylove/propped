@@ -19,13 +19,23 @@ export interface ToolDef {
   function: { name: string; description: string; parameters: Record<string, unknown> };
 }
 
+// One retry on network errors ("fetch failed"); the gateway blips occasionally.
+async function fetchRetry(url: string, init: RequestInit) {
+  try {
+    return await fetch(url, init);
+  } catch {
+    await new Promise((ok) => setTimeout(ok, 1500));
+    return fetch(url, { ...init, signal: AbortSignal.timeout(240000) });
+  }
+}
+
 export function llmConfigured() {
   return Boolean(process.env.QWEN_API_KEY && process.env.LLM_BASE_URL);
 }
 
 export async function chat(messages: ChatMessage[], opts: { tools?: ToolDef[]; maxTokens?: number; json?: boolean; think?: boolean } = {}) {
   if (!llmConfigured()) throw new LlmUnavailable("The language model isn't configured");
-  const res = await fetch(`${process.env.LLM_BASE_URL}/chat/completions`, {
+  const res = await fetchRetry(`${process.env.LLM_BASE_URL}/chat/completions`, {
     method: "POST",
     headers: { Authorization: `Bearer ${process.env.QWEN_API_KEY}`, "Content-Type": "application/json" },
     body: JSON.stringify({
