@@ -27,3 +27,12 @@ describe("mapStatus", () => {
     expect(mapStatus(null)).toBe("unknown");
   });
 });
+
+import { cleanCompany as cc } from "@/lib/enrich-pure";
+import { describe as d2, it as i2, expect as e2 } from "vitest";
+d2("cleanCompany footnotes", () => {
+  i2("drops efn footnote templates", () => {
+    e2(cc("3 Arts Entertainment, RCG Productions{{efn|name=a|Credited as RCH prior to 2008}}")).toBe("3 Arts Entertainment, RCG Productions");
+    e2(cc("3 Arts Entertainment\nRCG Productions{{efn, Credited as RCH prior to 2008")).toBe("3 Arts Entertainment, RCG Productions");
+  });
+});

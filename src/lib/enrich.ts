@@ -8,6 +8,7 @@ export interface ShowInfo {
   status: ShowStatus;
   network: string | null;
   genres: string[];
+  kind: string | null; // TVmaze type: Scripted, Animation, Reality, Documentary, Talk Show...
   poster: string | null;
   url: string | null;
   premiered: string | null;
@@ -67,6 +68,7 @@ export async function showInfo(name: string): Promise<ShowInfo | null> {
     status: mapStatus(s.status),
     network: s.network?.name ?? s.webChannel?.name ?? null,
     genres: s.genres ?? [],
+    kind: s.type ?? null,
     poster: s.image?.medium ?? s.image?.original ?? null,
     url: s.url ?? null,
     premiered: s.premiered ?? null,
