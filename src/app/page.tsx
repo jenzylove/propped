@@ -16,12 +16,6 @@ interface ShowsData {
   shows: Show[];
   calls: unknown[];
 }
-interface CompareData {
-  answer: string;
-  refused: boolean;
-  shows: string[];
-}
-
 const EXAMPLES = ["Liquid Death", "Parachute", "Athletic Brewing", "Dr. Squatch"];
 
 function fitLine(l: string | undefined) {
@@ -41,9 +35,7 @@ export default function Home() {
   const [input, setInput] = useState("");
   const [state, setState] = useState<"idle" | "loading" | "done" | "notfound" | "error">("idle");
   const [shows, setShows] = useState<ShowsData | null>(null);
-  const [cmp, setCmp] = useState<CompareData | null>(null);
   const [err, setErr] = useState("");
-  const [secs, setSecs] = useState(0);
   const resRef = useRef<HTMLDivElement>(null);
   const seq = useRef(0);
 
@@ -54,13 +46,8 @@ export default function Home() {
     setInput(q);
     setState("loading");
     setShows(null);
-    setCmp(null);
     window.history.replaceState(null, "", `/?brand=${encodeURIComponent(q)}`);
     setTimeout(() => resRef.current?.scrollIntoView({ behavior: "smooth", block: "start" }), 60);
-    const t0 = Date.now();
-    const cmpP = fetch(`/api/compare?brand=${encodeURIComponent(q)}`)
-      .then((r) => (r.ok ? (r.json() as Promise<CompareData>) : null))
-      .catch(() => null);
     try {
       const r = await fetch(`/api/shows?brand=${encodeURIComponent(q)}`);
       const j = await r.json().catch(() => ({}));
@@ -74,11 +61,8 @@ export default function Home() {
         setState("error");
         return;
       }
-      setSecs(Math.max(1, Math.round((Date.now() - t0) / 1000)));
       setShows(j);
       setState("done");
-      const c = await cmpP;
-      if (my === seq.current) setCmp(c);
     } catch {
       if (my === seq.current) setState("error");
     }
@@ -172,8 +156,8 @@ export default function Home() {
             <h2 className="display" style={{ fontSize: "clamp(30px, 5vw, 52px)" }}>
               {brandName} customers watch these shows
             </h2>
-            <p className="faint mono" style={{ fontSize: 13, marginTop: 10 }}>
-              {shows.shows.length} shows · ranked for your brand · {shows.calls.length} Qloo calls
+            <p className="muted" style={{ fontSize: 17, marginTop: 10 }}>
+              Ranked for your brand. Tap a show to see it.
             </p>
             <div className="wall" style={{ marginTop: 24 }}>
               {shows.shows.map((s, i) => {
@@ -221,44 +205,6 @@ export default function Home() {
               })}
             </div>
 
-            <div className="split">
-              <div className="glass" style={{ padding: 24, opacity: cmp ? 1 : 0.7 }}>
-                <span className="kicker" style={{ color: "var(--orange)", fontWeight: 600 }}>
-                  AI alone
-                </span>
-                <h3 style={{ fontSize: 20, fontWeight: 700, margin: "6px 0 12px" }}>We asked an AI the same question</h3>
-                {!cmp ? (
-                  <p className="muted">Asking…</p>
-                ) : (
-                  <>
-                    <blockquote className="muted" style={{ margin: 0, fontStyle: "italic" }}>
-                      “{cmp.answer}”
-                    </blockquote>
-                    {cmp.refused ? (
-                      <p style={{ marginTop: 12, fontWeight: 600, color: "var(--orange)" }}>It couldn’t answer. This data isn’t in its training.</p>
-                    ) : (
-                      <ul style={{ marginTop: 12, paddingLeft: 20 }}>
-                        {cmp.shows.map((x) => (
-                          <li key={x}>{x}</li>
-                        ))}
-                      </ul>
-                    )}
-                  </>
-                )}
-              </div>
-              <div className="glass" style={{ padding: 24, background: "var(--green-soft)" }}>
-                <span className="kicker" style={{ color: "var(--green)", fontWeight: 600 }}>
-                  Propped, with Qloo
-                </span>
-                <p className="display" style={{ fontSize: 34, marginTop: 10, lineHeight: 1.1 }}>
-                  {shows.shows.length} shows found in {secs}s
-                </p>
-                <p className="muted" style={{ marginTop: 8 }}>
-                  Ranked for {brandName}, with real show status and network.
-                </p>
-              </div>
-            </div>
-
             <div style={{ textAlign: "center", margin: "48px 0 8px" }}>
               <Link className="btn" href={`/plan?brand=${encodeURIComponent(brandName)}`} style={{ fontSize: 20, padding: "18px 34px" }}>
                 Get on these shows
@@ -280,9 +226,6 @@ export default function Home() {
             </div>
           ))}
         </div>
-        <p style={{ marginTop: 40, fontSize: 20, fontWeight: 600, maxWidth: 720 }}>
-          <Link href="/proof">Asked which shows a brand’s customers watch, an AI alone refused for 7 of 8 brands.</Link>
-        </p>
       </section>
     </main>
   );

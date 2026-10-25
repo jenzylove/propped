@@ -22,7 +22,7 @@ export function Header() {
         </Link>
         <nav>
           <Link href="/method">How it works</Link>
-          <Link href="/proof">Proof</Link>
+          <a href="https://github.com/jenzylove/propped" target="_blank" rel="noopener noreferrer">GitHub</a>
         </nav>
       </header>
     </div>
