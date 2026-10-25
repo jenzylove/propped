@@ -30,7 +30,15 @@ function norm(s: string) {
 }
 
 const SUFFIX = new Set(["co", "company", "inc", "foods", "food", "family", "soap", "brewing", "beverages", "beverage", "drinks", "beauty", "cosmetics", "brand", "brands", "the", "and", "usa", "us", "official"]);
-const tokens = (s: string) => s.toLowerCase().replace(/&/g, " and ").split(/[^a-z0-9]+/).filter(Boolean);
+// Lower case, apostrophes dropped ("Joe's" -> "joes"), "&" as "and", plural s removed ("secrets" -> "secret").
+const tokens = (s: string) =>
+  s
+    .toLowerCase()
+    .replace(/['’]/g, "")
+    .replace(/&/g, " and ")
+    .split(/[^a-z0-9]+/)
+    .filter(Boolean)
+    .map((t) => (t.length > 3 && t.endsWith("s") ? t.slice(0, -1) : t));
 
 /**
  * Accept a Qloo name for a query only if every query word is in it and the extra words are company suffixes
@@ -41,7 +49,7 @@ export function plausibleMatch(query: string, found: string) {
   const q = tokens(query);
   const f = tokens(found);
   if (!q.length || !f.length) return false;
-  if (norm(query) === norm(found)) return true;
+  if (norm(query) === norm(found) || tokens(query).join(" ") === tokens(found).join(" ")) return true;
   if (!q.every((t) => f.includes(t))) return f.every((t) => q.includes(t) || SUFFIX.has(t)); // found is the shorter form
   const extra = f.filter((t) => !q.includes(t));
   const by = extra.indexOf("by");

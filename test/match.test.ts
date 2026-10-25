@@ -13,5 +13,8 @@ describe("plausibleMatch", () => {
     ["Rhode", "Rhode Island School Of Design", false],
     ["Prime Hydration", "Amazon Prime Video", false],
     ["Away", "Away Resorts", false],
+    ["victoria secrets", "Victoria's Secret", true],
+    ["ben and jerrys", "Ben & Jerry's", true],
+    ["trader joes", "Trader Joe's", true],
   ])("%s -> %s is %s", (q, f, ok) => expect(plausibleMatch(q, f)).toBe(ok));
 });
