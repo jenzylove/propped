@@ -88,6 +88,12 @@ function toEntity(e: Record<string, unknown>): Entity {
   };
 }
 
+/** Up to 5 candidate entities for a name, best first. */
+export async function findEntities(name: string, type: "brand" | "tv_show" | "artist", log: QlooCall[]) {
+  const body = await getJson("/search", { query: name, types: `urn:entity:${type}`, take: 5 }, log);
+  return ((body.results as Record<string, unknown>[] | undefined) ?? []).map(toEntity);
+}
+
 /** Find an entity by name. Returns the top match or null. */
 export async function findEntity(name: string, type: "brand" | "tv_show" | "artist", log: QlooCall[]) {
   const body = await getJson("/search", { query: name, types: `urn:entity:${type}`, take: 5 }, log);
