@@ -108,7 +108,7 @@ export function PlacementDrops({ placements, ads }: { placements: PlanPlacement[
                 <p className="muted" style={{ margin: "4px 0 0" }}>{pl.how}</p>
               </div>
             ))}
-            <div className="kicker" style={{ marginTop: 14 }}>Based on these shows</div>
+            <div className="kicker" style={{ marginTop: 14 }}>Your customers watch these, live or streaming</div>
             <div style={{ marginTop: 8 }}>{ads.shows.map((g) => <span key={g} className="chip">{g}</span>)}</div>
           </div>
         </details>

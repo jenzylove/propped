@@ -61,7 +61,7 @@ The agent can only pick shows that are still filming and live action, and can on
 git clone https://github.com/jenzylove/propped
 cd propped
 npm install
-cp .env.example .env   # add your Qloo key and an OpenAI compatible model endpoint
+cp .env.example .env   # add your Qloo key and a language model endpoint
 npm run dev
 npm test
 ```
