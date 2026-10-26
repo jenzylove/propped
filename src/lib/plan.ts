@@ -85,7 +85,7 @@ const TOOLS: ToolDef[] = [
     type: "function",
     function: {
       name: "choose_placements",
-      description: "Pick up to 4 shows to pitch for product placement, only from the placeable list (running or awaiting renewal, live action). For each, one sentence a founder would understand on why it fits: what about the show and its viewers matches the brand (genre, tone, audience fit, made for this brand). Never use field words like renewal pending, running, made for this brand or audience fit. Never list ages or gender; say it in words a person would use, like \"a crowd close to your customers\" when audience_fit is the same people.",
+      description: "Pick up to 4 shows to pitch for product placement, only from the placeable list (running or awaiting renewal, live action). For each, one sentence a founder would understand on why it fits: what about the show and its viewers matches the brand (genre, tone, audience fit, made for this brand). Never use field words like renewal pending, still filming, rare for other brands or viewers vs customers. Never list ages or gender; say it in words a person would use, like \"a crowd close to your customers\" when viewers_vs_customers is the same people.",
       parameters: {
         type: "object",
         properties: { picks: { type: "array", items: { type: "object", properties: { show: { type: "string" }, why: { type: "string" } }, required: ["show", "why"] } } },
@@ -126,12 +126,12 @@ const TOOLS: ToolDef[] = [
 function showLine(s: ShowResult) {
   return {
     show: s.name,
-    status: s.info?.status ?? "unknown",
+    still_filming: placeable(s),
     network: s.info?.network ?? null,
     genres: s.info?.genres ?? [],
     company: s.info?.company ?? null,
-    made_for_this_brand: s.specific,
-    audience_fit: s.match?.label ?? "unknown",
+    rare_for_other_brands: s.specific,
+    viewers_vs_customers: s.match?.label ?? "unknown",
   };
 }
 
