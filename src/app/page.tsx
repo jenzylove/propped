@@ -3,7 +3,7 @@ import Link from "next/link";
 import Finder from "@/components/Finder";
 import { Reveal } from "@/components/Reveal";
 import { SAMPLE } from "./chrome";
-import { PlacementDrops, type PlanData } from "./plan/PlanView";
+import { AdSetup, PlacementDrops, type PlanData } from "./plan/PlanView";
 import showcase from "@/data/showcase.json";
 import sample from "@/data/sample-plan.json";
 
@@ -18,7 +18,8 @@ const SWAP: [string, string][] = [
   ["Guess from your own taste", "The shows your customers actually watch"],
   ["Pitch shows your customers don’t watch", "Shows ranked for your brand, not everyone’s"],
   ["Pitch shows that stopped filming years ago", "Only shows still filming get a pitch"],
-  ["Months of cold emails", "A letter, a studio and what to send, in a minute"],
+  ["Cold emails to nobody in particular", "Letters addressed to the people who dress each set"],
+  ["Months of waiting for a maybe", "A TV campaign for the same viewers this week"],
 ];
 
 const STEPS = [
@@ -33,14 +34,19 @@ const STEPS = [
     d: "The shows your customers watch far more than everyone else. Shows every brand gets are pushed down. Each one shows if it is still filming, its network and how close its audience is to yours.",
   },
   {
-    t: "Get a placement pack",
-    s: "A pitch letter per set",
-    d: "The agent picks the shows still filming, says what to send, and writes a letter to each show’s set decoration and props team.",
+    t: "Be on TV this week",
+    s: "From about $100",
+    d: "The exact settings for a self serve TV campaign aimed at the same viewers: their ages, the genres and networks they watch. Paste them into Universal Ads and launch.",
   },
   {
-    t: "Reach the same viewers with ads",
-    s: "From about $100",
-    d: "A self serve TV ad plan for the same genres, networks and audience, on Universal Ads or Amazon Sponsored TV.",
+    t: "Pitch the sets that will say yes",
+    s: "Realistic first, addressed to real people",
+    d: "The agent looks at every show your customers watch that is still filming, rates how likely each is to take free product, and writes a letter to the people who dress the set, with what to send.",
+  },
+  {
+    t: "Track every pitch",
+    s: "Pitched, replied, shipped, on screen",
+    d: "A pitch board on the plan’s link, so you and your team see where each show stands.",
   },
 ];
 
@@ -50,8 +56,12 @@ const FAQ = [
     a: "Most of it, yes. Sets need real products, and crews take them from brands for free. Paid deals exist, but they are the exception. Propped writes the free kind of pitch.",
   },
   {
-    q: "Does Propped contact the shows for me?",
-    a: "No. You get the pitch letters, who makes each show and what to send. You send them yourself, so every message comes from you.",
+    q: "Who do I send the letter to?",
+    a: "Each letter names who it goes to: the production designer when the show lists one, and the production company’s office that makes the show. Propped never sends anything for you; tap Email it and the letter is ready in your mail app.",
+  },
+  {
+    q: "Which shows will actually say yes?",
+    a: "Unscripted shows dress real homes and kitchens and take free product often, so they come first. Big scripted shows on the major networks rarely take an unknown brand without an ad buy, so Propped marks them and pitches them only when nothing better is filming.",
   },
   {
     q: "Where does the data come from?",
@@ -109,7 +119,7 @@ export default function Landing() {
             Get your product on the shows your <em>customers</em> watch.
           </h1>
           <p className="muted hero-sub">
-            Type your brand. Propped shows the TV your customers watch more than anyone else, then writes the pitch that gets your product on set.
+            Type your brand. Propped finds the TV your customers watch more than anyone else, puts you in front of those viewers this week, and pitches the sets most likely to say yes.
           </p>
           <div className="cta-row">
             <Link className="btn big" href="/app">
@@ -208,10 +218,13 @@ export default function Landing() {
       <section id="pack" className="wrap chapter rv">
         <p className="tape">Sc. 04 · What you get</p>
         <h2 className="display chap-h">
-          A pitch for every set. <em>An ad plan for the rest.</em>
+          On TV this week. <em>On set next.</em>
         </h2>
-        <p className="lede">A real plan the agent wrote for {plan.brand}, a bedding brand. Open a show to read its letter.</p>
-        <PlacementDrops placements={plan.placements} ads={plan.ads} />
+        <p className="lede">A real plan the agent wrote for {plan.brand}, a bedding brand.</p>
+        <h3 className="display" style={{ fontSize: 30, marginTop: 34 }}>The TV campaign</h3>
+        <AdSetup ads={plan.ads} />
+        <h3 className="display" style={{ fontSize: 30, marginTop: 44 }}>The sets to pitch</h3>
+        <PlacementDrops placements={plan.placements} brand={plan.brand} />
         <Link className="textlink" href={SAMPLE}>
           Open the full {plan.brand} plan ↗
         </Link>

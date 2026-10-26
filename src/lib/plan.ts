@@ -2,8 +2,10 @@
 // Facts (shows, status, networks, genres, audience, platform rules) come from code and data; the model chooses and writes.
 import "server-only";
 import { chat, type ChatMessage, type ToolDef } from "./llm";
-import { brandShows, type BrandShows, type ShowResult } from "./shows";
-import { AGE_KEYS } from "./core/rank";
+import { brandShows, pool, type BrandShows } from "./shows";
+import { AGE_KEYS, type DemoMatch } from "./core/rank";
+import { companyOf, setCrew, tvInfo, type ShowInfo } from "./enrich";
+import { chanceOf, recipientOf, TIER_ORDER, type Chance, type Recipient } from "./placement";
 
 export interface Placement {
   show: string;
@@ -14,6 +16,8 @@ export interface Placement {
   why: string;
   send: string;
   pitch: string;
+  chance?: Chance;
+  recipient?: Recipient;
 }
 
 export interface Plan {
@@ -28,6 +32,7 @@ export interface Plan {
     audience: { ages: string[]; gender: string };
     shows: string[];
     note: string;
+    setup?: string[];
   };
   steps: { tool: string; summary: string; ms: number }[];
   qlooCalls: number;
@@ -58,15 +63,45 @@ export function audienceOf(r: BrandShows) {
 }
 
 // Physical placement needs a live action set: running or awaiting renewal, and not animated.
-const animated = (s: ShowResult) => /anim/i.test(s.info?.kind ?? "") || (s.info?.genres ?? []).some((g) => /anim|anime/i.test(g));
-export const placeable = (s: ShowResult) => (s.info?.status === "running" || s.info?.status === "renewal pending") && !animated(s);
+type Info = Omit<ShowInfo, "company"> & { company?: string | null };
+const animated = (i: Info | null) => /anim/i.test(i?.kind ?? "") || (i?.genres ?? []).some((g) => /anim|anime/i.test(g));
+export const live = (i: Info | null) => !!i && (i.status === "running" || i.status === "renewal pending") && !animated(i);
+
+interface Candidate {
+  name: string;
+  rank: number;
+  info: Info;
+  specific: boolean;
+  match: DemoMatch | null;
+  chance: Chance;
+}
+
+/** Every show Qloo returned that is still filming and live action, rated for how realistic a free placement is. */
+async function candidatesFor(data: BrandShows): Promise<{ list: Candidate[]; liveCount: number; total: number }> {
+  const ranked = data.ranked ?? data.shows;
+  const known = new Map(data.shows.map((s) => [s.id, s]));
+  const infos = await pool(ranked, 3, async (r) => known.get(r.id)?.info ?? (await tvInfo(r.name)));
+  const list = ranked
+    .map((r, i) => ({ r, info: infos[i] as Info | null, i }))
+    .filter((x) => live(x.info))
+    .map(({ r, info, i }) => ({
+      name: info!.name,
+      rank: i + 1,
+      info: info!,
+      specific: r.specific,
+      match: known.get(r.id)?.match ?? null,
+      chance: chanceOf(info!.kind, info!.network),
+    }));
+  const sorted = [...list].sort((x, y) => TIER_ORDER[x.chance.tier] - TIER_ORDER[y.chance.tier] || x.rank - y.rank);
+  return { list: sorted.slice(0, 10), liveCount: list.length, total: ranked.length };
+}
 
 const TOOLS: ToolDef[] = [
   {
     type: "function",
     function: {
       name: "read_shows",
-      description: "Read the TV shows this brand's customers over-index on, ranked for the brand, with status, network, genres, production company and audience fit.",
+      description: "Read the TV shows this brand's customers over-index on, and the candidates for placement: shows still filming, each with a realistic chance of taking free product (Likely yes, Worth a pitch, Needs an ad buy).",
       parameters: { type: "object", properties: {} },
     },
   },
@@ -74,7 +109,7 @@ const TOOLS: ToolDef[] = [
     type: "function",
     function: {
       name: "choose_placements",
-      description: "Pick up to 4 shows to pitch for product placement, only from the placeable list (running or awaiting renewal, live action). For each, one sentence a founder would understand on why it fits: what about the show and its viewers matches the brand (genre, tone, audience fit, made for this brand). Never use field words like renewal pending, still filming, rare for other brands or viewers vs customers. Never list ages or gender; say it in words a person would use, like \"a crowd close to your customers\" when viewers_vs_customers is the same people.",
+      description: "Pick up to 4 shows to pitch for product placement, only from the candidates. Prefer Likely yes, then Worth a pitch; Needs an ad buy shows are refused while two or more realistic candidates exist. For each, one sentence a founder would understand on why it fits: what about the show and its viewers matches the brand (genre, tone, audience fit, made for this brand). Never use field words like renewal pending, still filming, rare for other brands or viewers vs customers. Never list ages or gender; say it in words a person would use, like \"a crowd close to your customers\" when viewers_vs_customers is the same people.",
       parameters: {
         type: "object",
         properties: { picks: { type: "array", items: { type: "object", properties: { show: { type: "string" }, why: { type: "string" } }, required: ["show", "why"] } } },
@@ -99,7 +134,7 @@ const TOOLS: ToolDef[] = [
     function: {
       name: "finish",
       description:
-        "Finish. For each chosen placement: what to send (product and quantity, short), and a pitch letter of 90 to 140 words to the production company's set decoration and props team. The letter should: name the show; suggest one or two natural places the product could sit in a scene, as ideas, matched to the show's genre and tone (for example a bar fridge, a kitchen counter, a gym bag); say the product is free with no paid placement required; offer to ship within a week; sign off from the brand. Don't invent facts about episodes, characters or the brand's history. Then a two sentence summary for the founder: which shows to pitch first and what the ads should target. Nothing has been sent or bought yet, so never say secured, booked, placed or guaranteed.",
+        "Finish. For each chosen placement: what to send (product and quantity, short), and a pitch letter of 90 to 140 words. Start it with the exact greeting given for that show in choose_placements, then a comma. The letter should: name the show; suggest one or two natural places the product could sit in a scene, as ideas, matched to the show's genre and tone (for example a bar fridge, a kitchen counter, a gym bag); say the product is free with no paid placement required; offer to ship within a week; sign off from the brand. Don't invent facts about episodes, characters or the brand's history. Then a two sentence summary for the founder: which shows to pitch first and what the ads should target. Nothing has been sent or bought yet, so never say secured, booked, placed or guaranteed.",
       parameters: {
         type: "object",
         properties: {
@@ -112,19 +147,39 @@ const TOOLS: ToolDef[] = [
   },
 ];
 
-function showLine(s: ShowResult) {
+function showLine(c: Candidate) {
   return {
-    show: s.name,
-    still_filming: placeable(s),
-    network: s.info?.network ?? null,
-    genres: s.info?.genres ?? [],
-    company: s.info?.company ?? null,
-    rare_for_other_brands: s.specific,
-    viewers_vs_customers: s.match?.label ?? "unknown",
+    show: c.name,
+    chance: c.chance.label,
+    kind: c.info.kind,
+    network: c.info.network,
+    genres: c.info.genres,
+    rank_for_brand: c.rank,
+    rare_for_other_brands: c.specific,
+    viewers_vs_customers: c.match?.label ?? "unknown",
   };
 }
 
+/** Plain steps to set up the same audience on a self serve TV platform. */
+export function adSetup(genres: string[], networks: string[], audience: { ages: string[]; gender: string }) {
+  const gender = audience.gender === "leans male" ? ", leaning male" : audience.gender === "leans female" ? ", leaning female" : "";
+  return [
+    "Open Universal Ads and start a new campaign. It is self serve, from as little as $100.",
+    audience.ages.length ? `Audience: people aged ${audience.ages.join(", ")}${gender}.` : "Audience: adults, all ages.",
+    genres.length ? `What they watch: ${genres.join(", ")} programming.` : "What they watch: the genres of the shows above.",
+    networks.length ? `Networks to favor where offered: ${networks.join(", ")}.` : "Networks: leave open.",
+    "Location: only where you ship.",
+    "Budget: start with $100 over one week, then keep what works.",
+  ];
+}
+
 const eq = (a: string, b: string) => a.toLowerCase().trim() === b.toLowerCase().trim();
+
+/** Make sure a letter opens with the right greeting, whatever the model wrote first. */
+export function addressed(pitch: string, greeting: string) {
+  const body = pitch.trim().replace(/^dear[^\n,]*,?\s*/i, "");
+  return body ? `${greeting},\n\n${body}` : "";
+}
 
 export async function runPlan(brand: string, emit: (s: Step) => void): Promise<Plan> {
   const steps: Step[] = [];
@@ -135,14 +190,19 @@ export async function runPlan(brand: string, emit: (s: Step) => void): Promise<P
   };
 
   const t0 = Date.now();
-  const data = await brandShows(brand);
+  const data = await brandShows(brand, { keepRanked: true });
   if (!data.brand) throw new Error(`"${brand}" isn't in Qloo's taste data yet.`);
-  record("read_taste", `Read ${data.shows.length} shows ${data.brand.name} customers over-index on`, t0);
+  record("read_taste", `Read ${data.ranked?.length ?? data.shows.length} shows ${data.brand.name} customers over-index on`, t0);
   const audience = audienceOf(data);
   const allGenres = [...new Set(data.shows.flatMap((s) => s.info?.genres ?? []))];
   const allNetworks = [...new Set(data.shows.map((s) => s.info?.network).filter(Boolean) as string[])];
+  const tc0 = Date.now();
+  const cands = await candidatesFor(data);
+  const realistic = cands.list.filter((c) => c.chance.tier !== "adbuy");
+  const likelyCount = cands.list.filter((c) => c.chance.tier === "likely").length;
+  record("read_shows", `${cands.liveCount} of ${cands.total} are still filming; ${likelyCount} of the best are likely to take free product`, tc0);
 
-  let picks: { show: ShowResult; why: string }[] = [];
+  let picks: { cand: Candidate; why: string; recipient: Recipient; company: string | null }[] = [];
   let ads: { genres: string[]; networks: string[] } | null = null;
   let done: { summary: string; placements: { show: string; send: string; pitch: string }[] } | null = null;
 
@@ -171,16 +231,34 @@ export async function runPlan(brand: string, emit: (s: Step) => void): Promise<P
       }
       let result: unknown;
       if (tc.function.name === "read_shows") {
-        result = { shows: data.shows.map(showLine), placeable: data.shows.filter(placeable).map((s) => s.name) };
-        record("read_shows", `${data.shows.filter(placeable).length} of ${data.shows.length} shows are still running or awaiting renewal`, ts);
+        result = {
+          top_shows: data.shows.map((s) => ({ show: s.name, network: s.info?.network ?? null, genres: s.info?.genres ?? [] })),
+          candidates: cands.list.map(showLine),
+        };
       } else if (tc.function.name === "choose_placements") {
         const want = ((args.picks as { show: string; why: string }[]) ?? []).slice(0, 4);
-        picks = want.flatMap((p) => {
-          const s = data.shows.find((x) => eq(x.name, p.show) && placeable(x));
-          return s ? [{ show: s, why: String(p.why).slice(0, 300) }] : [];
+        const rejected: string[] = [];
+        const chosen = want.flatMap((p) => {
+          const c = cands.list.find((x) => eq(x.name, p.show));
+          if (!c) {
+            rejected.push(`${p.show}: not a candidate`);
+            return [];
+          }
+          if (c.chance.tier === "adbuy" && realistic.length >= 2) {
+            rejected.push(`${p.show}: needs an ad buy while realistic shows exist`);
+            return [];
+          }
+          return [{ cand: c, why: String(p.why).slice(0, 300) }];
         });
-        result = { accepted: picks.map((p) => p.show.name), rejected: want.filter((p) => !picks.some((x) => eq(x.show.name, p.show))).map((p) => `${p.show}: not running or not in the list`) };
-        record("choose_placements", picks.length ? `Picked ${picks.map((p) => p.show.name).join(", ")}` : "No running shows to pitch", ts);
+        picks = await Promise.all(
+          chosen.map(async (p) => {
+            const [company, crew] = await Promise.all([companyOf(p.cand.info.name), setCrew(p.cand.info.tvmazeId)]);
+            return { ...p, company, recipient: recipientOf(p.cand.name, crew, company, p.cand.info.network) };
+          }),
+        );
+        result = { accepted: picks.map((p) => ({ show: p.cand.name, greeting: p.recipient.greeting, chance: p.cand.chance.label })), rejected };
+        const named = picks.some((p) => p.recipient.person) ? ", with the people who dress their sets" : "";
+        record("choose_placements", picks.length ? `Picked ${picks.map((p) => p.cand.name).join(", ")}${named}` : "No shows to pitch right now", ts);
       } else if (tc.function.name === "plan_ads") {
         const g = ((args.genres as string[]) ?? []).filter((x) => allGenres.some((y) => eq(x, y))).slice(0, 4);
         const n = ((args.networks as string[]) ?? []).filter((x) => allNetworks.some((y) => eq(x, y))).slice(0, 4);
@@ -188,9 +266,9 @@ export async function runPlan(brand: string, emit: (s: Step) => void): Promise<P
         result = { genres: g, networks: n, audience, note: "Platforms target genres and audiences, not single shows." };
         record("plan_ads", `Ads: ${g.join(", ") || "no genres"} viewers, ${audience.ages.join(", ") || "all ages"}, ${audience.gender}`, ts);
       } else if (tc.function.name === "finish") {
-        const ps = ((args.placements as { show: string; send: string; pitch: string }[]) ?? []).filter((p) => picks.some((x) => eq(x.show.name, p.show)));
+        const ps = ((args.placements as { show: string; send: string; pitch: string }[]) ?? []).filter((p) => picks.some((x) => eq(x.cand.name, p.show)));
         done = { summary: String(args.summary ?? "").slice(0, 600), placements: ps };
-        record("finish", `Wrote ${ps.length} pitch letters and the ad plan`, ts);
+        record("finish", `Wrote ${ps.length} pitch letters and the ad setup`, ts);
         result = { ok: true };
       } else {
         result = { error: "Unknown tool" };
@@ -208,16 +286,18 @@ export async function runPlan(brand: string, emit: (s: Step) => void): Promise<P
     brand: data.brand.name,
     summary: fin.summary,
     placements: picks.map((p) => {
-      const w = fin.placements.find((x) => eq(x.show, p.show.name));
+      const w = fin.placements.find((x) => eq(x.show, p.cand.name));
       return {
-        show: p.show.name,
-        network: p.show.info?.network ?? null,
-        status: p.show.info?.status ?? "unknown",
-        company: p.show.info?.company ?? null,
-        poster: p.show.info?.poster ?? null,
+        show: p.cand.name,
+        network: p.cand.info.network,
+        status: p.cand.info.status,
+        company: p.company,
+        poster: p.cand.info.poster,
         why: p.why,
         send: w?.send ?? "",
-        pitch: w?.pitch ?? "",
+        pitch: addressed(w?.pitch ?? "", p.recipient.greeting),
+        chance: p.cand.chance,
+        recipient: p.recipient,
       };
     }),
     ads: {
@@ -227,6 +307,7 @@ export async function runPlan(brand: string, emit: (s: Step) => void): Promise<P
       audience,
       shows: data.shows.slice(0, 6).map((s) => s.name),
       note: "Self serve platforms sell genres and audiences, not single shows. These shows are why these genres were chosen.",
+      setup: adSetup(a.genres, a.networks, audience),
     },
     steps,
     qlooCalls: data.calls.length,

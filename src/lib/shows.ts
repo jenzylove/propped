@@ -21,6 +21,8 @@ export interface BrandShows {
   calls: QlooCall[];
   method: { version: string; referenceBrands: number; referenceBuilt: string };
   at: string;
+  /** Every show Qloo returned, ranked for the brand. Only filled for the planner. */
+  ranked?: RankedShow[];
 }
 
 const ref = reference as { builtAt: string; brands: unknown[]; showBrandCounts: Record<string, number> };
@@ -57,7 +59,7 @@ export function plausibleMatch(query: string, found: string) {
   return rest.every((t) => SUFFIX.has(t));
 }
 
-async function pool<T, R>(items: T[], n: number, fn: (t: T) => Promise<R>) {
+export async function pool<T, R>(items: T[], n: number, fn: (t: T) => Promise<R>) {
   const out: R[] = new Array(items.length);
   let i = 0;
   await Promise.all(
@@ -71,7 +73,7 @@ async function pool<T, R>(items: T[], n: number, fn: (t: T) => Promise<R>) {
   return out;
 }
 
-export async function brandShows(query: string): Promise<BrandShows> {
+export async function brandShows(query: string, opts: { keepRanked?: boolean } = {}): Promise<BrandShows> {
   const calls: QlooCall[] = [];
   const method = { version: METHOD_VERSION, referenceBrands: ref.brands.length, referenceBuilt: ref.builtAt };
   const at = new Date().toISOString();
@@ -80,11 +82,12 @@ export async function brandShows(query: string): Promise<BrandShows> {
   if (!e) return { query, brand: null, shows: [], calls, method, at };
 
   const [raw, brandDemo] = await Promise.all([affinities(e.id, "tv_show", 50, calls), demographics(e.id, calls)]);
-  const ranked = rankShows(raw, ref.showBrandCounts, ref.brands.length).slice(0, TOP);
+  const all = rankShows(raw, ref.showBrandCounts, ref.brands.length);
+  const ranked = all.slice(0, TOP);
   const shows = await pool(ranked, 4, async (s) => {
     const [info, demo] = await Promise.all([showInfo(s.name), demographics(s.id, calls).catch(() => null)]);
     const match = brandDemo && demo ? demoMatch(brandDemo, demo) : null;
     return { ...s, info, match, fit: match ? fitSentence(match) : null };
   });
-  return { query, brand: { id: e.id, name: e.name, demo: brandDemo }, shows, calls, method, at };
+  return { query, brand: { id: e.id, name: e.name, demo: brandDemo }, shows, calls, method, at, ...(opts.keepRanked ? { ranked: all } : {}) };
 }

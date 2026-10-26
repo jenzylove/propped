@@ -57,7 +57,9 @@ export default function MethodPage() {
           <p style={p}>TVmaze gives us each show’s status, network, genres, poster and type. Wikipedia gives us the production company, who you would write to.</p>
         </Step>
         <Step n={6} title="Build the plan">
-          <p style={p}>Product placement is only for shows that are running or waiting on a renewal, and only live action. Animated shows are left out.</p>
+          <p style={p}>Product placement is only for shows that are running or waiting on a renewal, and only live action. Animated shows are left out. Propped checks every show Qloo returns, not just the top twelve.</p>
+          <p style={p}><b>Likely yes:</b> unscripted shows, which dress real homes and kitchens and take free product often. <b>Worth a pitch:</b> smaller scripted shows. <b>Needs an ad buy:</b> big scripted shows on the major networks and streamers, which the agent can only pick when nothing more realistic is filming.</p>
+          <p style={p}>Each letter is addressed to the people who dress the set: the production designer when TVmaze lists one, care of the production company from Wikipedia.</p>
           <p style={p}>Ads are bought by genre, network and audience, because self serve platforms don’t sell single shows. Your shows are the reason we pick those genres and networks.</p>
           <div className="kicker" style={{ marginTop: 20 }}>Where to buy</div>
           {PLATFORMS.map((pl) => (

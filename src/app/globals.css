@@ -551,6 +551,11 @@ select {
   .finder.embed .wall { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 
+.copy.ghost { background: transparent; color: var(--ink); border: 1px solid var(--rule); text-decoration: none; display: inline-block; margin-top: 14px; }
+.steps-list { margin: 22px 0 0; padding: 0; list-style: none; counter-reset: s; border-top: 2px solid var(--ink); max-width: 860px; }
+.steps-list li { counter-increment: s; display: grid; grid-template-columns: 44px minmax(0, 1fr); gap: 12px; padding: 14px 0; border-bottom: 1px solid var(--rule); font-size: 17px; }
+.steps-list li::before { content: counter(s, decimal-leading-zero); font-family: var(--stencil); font-weight: 900; font-size: 24px; color: var(--green); line-height: 1.1; }
+
 /* keep headings clear of the floating header when the page scrolls to them */
 html {
   scroll-padding-top: 104px;

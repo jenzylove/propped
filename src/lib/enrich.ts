@@ -4,6 +4,7 @@ import { cleanCompany, mapStatus, type ShowStatus } from "./enrich-pure";
 export { cleanCompany, mapStatus };
 
 export interface ShowInfo {
+  tvmazeId: number | null;
   name: string;
   status: ShowStatus;
   network: string | null;
@@ -20,6 +21,7 @@ const UA = "Propped/1.0 (public TV placement research)";
 const cache = new Map<string, ShowInfo | null>();
 
 interface TvmazeShow {
+  id?: number;
   name?: string;
   status?: string;
   type?: string;
@@ -39,9 +41,17 @@ interface WikiResponse {
 }
 
 async function getJson<T>(url: string): Promise<T | null> {
-  const res = await fetch(url, { headers: { "User-Agent": UA }, signal: AbortSignal.timeout(15000) });
-  if (!res.ok) return null;
-  return res.json();
+  // TVmaze allows about 20 calls per 10 seconds; back off and retry when it says slow down.
+  for (let attempt = 0; attempt < 4; attempt++) {
+    const res = await fetch(url, { headers: { "User-Agent": UA }, signal: AbortSignal.timeout(15000) });
+    if (res.status === 429) {
+      await new Promise((r) => setTimeout(r, 1500 * (attempt + 1)));
+      continue;
+    }
+    if (!res.ok) return null;
+    return res.json();
+  }
+  return null;
 }
 
 async function wikiCompany(name: string): Promise<string | null> {
@@ -72,28 +82,58 @@ async function wikiCompany(name: string): Promise<string | null> {
   return null;
 }
 
-export async function showInfo(name: string): Promise<ShowInfo | null> {
-  if (cache.has(name)) return cache.get(name)!;
+const tvCache = new Map<string, Omit<ShowInfo, "company"> | null>();
+
+/** TVmaze facts only: status, type, network, genres, poster. Cheap enough for a whole list. */
+export async function tvInfo(name: string): Promise<Omit<ShowInfo, "company"> | null> {
+  if (tvCache.has(name)) return tvCache.get(name)!;
   let s: TvmazeShow | null;
   try {
     s = await getJson<TvmazeShow>(`https://api.tvmaze.com/singlesearch/shows?q=${encodeURIComponent(name)}&embed=nextepisode`);
   } catch {
     return null;
   }
-  if (!s) return null;
-  const company = await wikiCompany(name).catch(() => null);
-  const info: ShowInfo = {
-    name: s.name ?? name,
-    status: mapStatus(s.status),
-    network: s.network?.name ?? s.webChannel?.name ?? null,
-    genres: s.genres ?? [],
-    kind: s.type ?? null,
-    poster: s.image?.medium ?? s.image?.original ?? null,
-    url: s.url ?? null,
-    premiered: s.premiered ?? null,
-    nextEpisode: s._embedded?.nextepisode?.airdate ?? null,
-    company,
-  };
+  const info = s
+    ? {
+        tvmazeId: s.id ?? null,
+        name: s.name ?? name,
+        status: mapStatus(s.status),
+        network: s.network?.name ?? s.webChannel?.name ?? null,
+        genres: s.genres ?? [],
+        kind: s.type ?? null,
+        poster: s.image?.medium ?? s.image?.original ?? null,
+        url: s.url ?? null,
+        premiered: s.premiered ?? null,
+        nextEpisode: s._embedded?.nextepisode?.airdate ?? null,
+      }
+    : null;
+  tvCache.set(name, info);
+  return info;
+}
+
+/** The production company, from the show's Wikipedia infobox. */
+export const companyOf = (name: string) => wikiCompany(name).catch(() => null);
+
+/** People who run the look of the set: production designers, set decorators and prop masters listed on TVmaze. */
+export async function setCrew(tvmazeId: number | null): Promise<{ name: string; role: string }[]> {
+  if (!tvmazeId) return [];
+  try {
+    const crew = await getJson<{ type?: string; person?: { name?: string } }[]>(`https://api.tvmaze.com/shows/${tvmazeId}/crew`);
+    const roles = ["Set Decorator", "Property Master", "Production Designer"];
+    return (crew ?? [])
+      .filter((c) => c.type && roles.includes(c.type) && c.person?.name)
+      .sort((a, b) => roles.indexOf(a.type!) - roles.indexOf(b.type!))
+      .map((c) => ({ name: c.person!.name!, role: c.type!.toLowerCase() }));
+  } catch {
+    return [];
+  }
+}
+
+export async function showInfo(name: string): Promise<ShowInfo | null> {
+  if (cache.has(name)) return cache.get(name)!;
+  const tv = await tvInfo(name);
+  if (!tv) return null;
+  const info: ShowInfo = { ...tv, company: await companyOf(name) };
   cache.set(name, info);
   return info;
 }
