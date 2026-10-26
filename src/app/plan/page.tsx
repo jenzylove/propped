@@ -77,7 +77,7 @@ export default function PlanPage() {
 
   return (
     <main className="wrap" style={{ paddingTop: 56 }}>
-      <Link href={brand ? `/?brand=${encodeURIComponent(brand)}` : "/"} className="muted" style={{ fontSize: 14 }}>
+      <Link href={brand ? `/app?brand=${encodeURIComponent(brand)}` : "/app"} className="muted" style={{ fontSize: 14 }}>
         Back to the shows
       </Link>
       <h1 className="display" style={{ fontSize: "clamp(36px, 6vw, 68px)", marginTop: 12 }}>

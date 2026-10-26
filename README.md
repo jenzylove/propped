@@ -21,8 +21,8 @@
 
 | You want to | Go to |
 | --- | --- |
-| Try it in ten seconds | [propped-alpha.vercel.app](https://propped-alpha.vercel.app) and tap **Parachute** |
-| See a full placement pack | Tap **Get on these shows** after any search |
+| Try it in ten seconds | [propped-alpha.vercel.app/app](https://propped-alpha.vercel.app/app) and tap **Parachute** |
+| See a full placement pack | [Sample plan for Parachute](https://propped-alpha.vercel.app/plan/parachute-gz743), or tap **Get on these shows** after any search |
 | Understand each step | [How it works](https://propped-alpha.vercel.app/method) |
 | Run it yourself | [Run locally](#run-locally) |
 

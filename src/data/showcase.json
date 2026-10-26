@@ -1,0 +1,444 @@
+{
+ "builtAt": "2026-10-26",
+ "total": 39,
+ "brands": {
+  "Liquid Death": {
+   "brand": "Liquid Death",
+   "shows": [
+    {
+     "name": "It's Always Sunny in Philadelphia",
+     "poster": "https://static.tvmaze.com/uploads/images/medium_portrait/636/1592247.jpg",
+     "status": "renewal pending",
+     "network": "FXX",
+     "specific": true,
+     "match": "the same people"
+    },
+    {
+     "name": "Workaholics",
+     "poster": "https://static.tvmaze.com/uploads/images/medium_portrait/2/5510.jpg",
+     "status": "ended",
+     "network": "Comedy Central",
+     "specific": true,
+     "match": "close"
+    },
+    {
+     "name": "Trailer Park Boys",
+     "poster": "https://static.tvmaze.com/uploads/images/medium_portrait/2/5013.jpg",
+     "status": "running",
+     "network": "SwearNet",
+     "specific": true,
+     "match": "different"
+    },
+    {
+     "name": "Reno 911!",
+     "poster": "https://static.tvmaze.com/uploads/images/medium_portrait/268/672171.jpg",
+     "status": "ended",
+     "network": "Quibi",
+     "specific": true,
+     "match": "close"
+    },
+    {
+     "name": "The Whitest Kids U'Know",
+     "poster": "https://static.tvmaze.com/uploads/images/medium_portrait/18/47430.jpg",
+     "status": "ended",
+     "network": "IFC",
+     "specific": true,
+     "match": "close"
+    },
+    {
+     "name": "Curb Your Enthusiasm",
+     "poster": "https://static.tvmaze.com/uploads/images/medium_portrait/500/1250735.jpg",
+     "status": "ended",
+     "network": "HBO",
+     "specific": true,
+     "match": "different"
+    },
+    {
+     "name": "The Increasingly Poor Decisions of Todd Margaret",
+     "poster": "https://static.tvmaze.com/uploads/images/medium_portrait/19/49139.jpg",
+     "status": "ended",
+     "network": "IFC",
+     "specific": true,
+     "match": "different"
+    },
+    {
+     "name": "Legit",
+     "poster": "https://static.tvmaze.com/uploads/images/medium_portrait/37/93055.jpg",
+     "status": "ended",
+     "network": "BBC One",
+     "specific": true,
+     "match": "the same people"
+    },
+    {
+     "name": "Arrested Development",
+     "poster": "https://static.tvmaze.com/uploads/images/medium_portrait/338/846049.jpg",
+     "status": "ended",
+     "network": "Netflix",
+     "specific": true,
+     "match": "different"
+    },
+    {
+     "name": "I Think You Should Leave with Tim Robinson",
+     "poster": "https://static.tvmaze.com/uploads/images/medium_portrait/193/482770.jpg",
+     "status": "ended",
+     "network": "Netflix",
+     "specific": true,
+     "match": "different"
+    },
+    {
+     "name": "Eastbound & Down",
+     "poster": "https://static.tvmaze.com/uploads/images/medium_portrait/6/17326.jpg",
+     "status": "ended",
+     "network": "HBO",
+     "specific": true,
+     "match": "the same people"
+    },
+    {
+     "name": "King of the Hill",
+     "poster": "https://static.tvmaze.com/uploads/images/medium_portrait/633/1583514.jpg",
+     "status": "running",
+     "network": "Hulu",
+     "specific": true,
+     "match": "the same people"
+    }
+   ]
+  },
+  "Parachute": {
+   "brand": "Parachute",
+   "shows": [
+    {
+     "name": "Grand Designs",
+     "poster": "https://static.tvmaze.com/uploads/images/medium_portrait/591/1478756.jpg",
+     "status": "running",
+     "network": "Channel 4",
+     "specific": true,
+     "match": "different"
+    },
+    {
+     "name": "The Great Interior Design Challenge",
+     "poster": "https://static.tvmaze.com/uploads/images/medium_portrait/398/995795.jpg",
+     "status": "ended",
+     "network": "BBC Two",
+     "specific": true,
+     "match": "different"
+    },
+    {
+     "name": "Grand Designs Australia",
+     "poster": "https://static.tvmaze.com/uploads/images/medium_portrait/538/1345757.jpg",
+     "status": "renewal pending",
+     "network": "ABC iview",
+     "specific": true,
+     "match": "different"
+    },
+    {
+     "name": "Stay Here",
+     "poster": "https://static.tvmaze.com/uploads/images/medium_portrait/164/411652.jpg",
+     "status": "ended",
+     "network": "Netflix",
+     "specific": true,
+     "match": "different"
+    },
+    {
+     "name": "The Restoration Man",
+     "poster": "https://static.tvmaze.com/uploads/images/medium_portrait/25/64874.jpg",
+     "status": "ended",
+     "network": "Channel 4",
+     "specific": true,
+     "match": "close"
+    },
+    {
+     "name": "Escape to the Country",
+     "poster": "https://static.tvmaze.com/uploads/images/medium_portrait/624/1561172.jpg",
+     "status": "running",
+     "network": "BBC One",
+     "specific": true,
+     "match": "different"
+    },
+    {
+     "name": "Your Home Made Perfect",
+     "poster": "https://static.tvmaze.com/uploads/images/medium_portrait/191/479916.jpg",
+     "status": "renewal pending",
+     "network": "BBC Two",
+     "specific": true,
+     "match": "different"
+    },
+    {
+     "name": "Good Bones",
+     "poster": null,
+     "status": "renewal pending",
+     "network": "Prime Video",
+     "specific": true,
+     "match": "different"
+    },
+    {
+     "name": "Dragons' Den",
+     "poster": "https://static.tvmaze.com/uploads/images/medium_portrait/645/1613639.jpg",
+     "status": "running",
+     "network": "CBC",
+     "specific": true,
+     "match": "different"
+    },
+    {
+     "name": "Home Town",
+     "poster": "https://static.tvmaze.com/uploads/images/medium_portrait/549/1373674.jpg",
+     "status": "running",
+     "network": "HGTV",
+     "specific": true,
+     "match": "different"
+    },
+    {
+     "name": "The Repair Shop",
+     "poster": "https://static.tvmaze.com/uploads/images/medium_portrait/610/1526147.jpg",
+     "status": "running",
+     "network": "BBC One",
+     "specific": true,
+     "match": "close"
+    },
+    {
+     "name": "Extreme Makeover: Home Edition",
+     "poster": "https://static.tvmaze.com/uploads/images/medium_portrait/268/670102.jpg",
+     "status": "ended",
+     "network": "ABC",
+     "specific": true,
+     "match": "different"
+    }
+   ]
+  },
+  "Athletic Brewing": {
+   "brand": "Athletic Brewing Co",
+   "shows": [
+    {
+     "name": "Jury Duty Presents",
+     "poster": "https://static.tvmaze.com/uploads/images/medium_portrait/619/1547537.jpg",
+     "status": "ended",
+     "network": "Prime Video",
+     "specific": true,
+     "match": "different"
+    },
+    {
+     "name": "Shrinking",
+     "poster": "https://static.tvmaze.com/uploads/images/medium_portrait/610/1527402.jpg",
+     "status": "running",
+     "network": "Apple TV",
+     "specific": true,
+     "match": "the same people"
+    },
+    {
+     "name": "Sprung",
+     "poster": "https://static.tvmaze.com/uploads/images/medium_portrait/419/1047741.jpg",
+     "status": "ended",
+     "network": "Amazon Freevee",
+     "specific": true,
+     "match": "different"
+    },
+    {
+     "name": "Welcome to Flatch",
+     "poster": "https://static.tvmaze.com/uploads/images/medium_portrait/418/1046811.jpg",
+     "status": "ended",
+     "network": "FOX",
+     "specific": true,
+     "match": "different"
+    },
+    {
+     "name": "Playing House",
+     "poster": "https://static.tvmaze.com/uploads/images/medium_portrait/117/294873.jpg",
+     "status": "ended",
+     "network": "USA Network",
+     "specific": true,
+     "match": "different"
+    },
+    {
+     "name": "Abbott Elementary",
+     "poster": "https://static.tvmaze.com/uploads/images/medium_portrait/644/1611887.jpg",
+     "status": "running",
+     "network": "ABC",
+     "specific": true,
+     "match": "different"
+    },
+    {
+     "name": "Crashing",
+     "poster": "https://static.tvmaze.com/uploads/images/medium_portrait/615/1539121.jpg",
+     "status": "ended",
+     "network": "HBO",
+     "specific": true,
+     "match": "close"
+    },
+    {
+     "name": "Brockmire",
+     "poster": "https://static.tvmaze.com/uploads/images/medium_portrait/190/475038.jpg",
+     "status": "ended",
+     "network": "IFC",
+     "specific": true,
+     "match": "different"
+    },
+    {
+     "name": "Ted Lasso",
+     "poster": "https://static.tvmaze.com/uploads/images/medium_portrait/634/1585930.jpg",
+     "status": "renewal pending",
+     "network": "Apple TV",
+     "specific": true,
+     "match": "different"
+    },
+    {
+     "name": "Hard Cell",
+     "poster": "https://static.tvmaze.com/uploads/images/medium_portrait/401/1003188.jpg",
+     "status": "ended",
+     "network": "Netflix",
+     "specific": true,
+     "match": "close"
+    },
+    {
+     "name": "Whites",
+     "poster": "https://static.tvmaze.com/uploads/images/medium_portrait/8/20029.jpg",
+     "status": "ended",
+     "network": "BBC Two",
+     "specific": true,
+     "match": "different"
+    },
+    {
+     "name": "Benched",
+     "poster": "https://static.tvmaze.com/uploads/images/medium_portrait/1/4351.jpg",
+     "status": "ended",
+     "network": "USA Network",
+     "specific": true,
+     "match": "different"
+    }
+   ]
+  },
+  "Olipop": {
+   "brand": "Olipop",
+   "shows": [
+    {
+     "name": "The World According to Jeff Goldblum",
+     "poster": "https://static.tvmaze.com/uploads/images/medium_portrait/368/922412.jpg",
+     "status": "running",
+     "network": "Disney+",
+     "specific": true,
+     "match": "different"
+    },
+    {
+     "name": "Jack Whitehall: Travels with My Father",
+     "poster": "https://static.tvmaze.com/uploads/images/medium_portrait/182/456858.jpg",
+     "status": "ended",
+     "network": "Netflix",
+     "specific": true,
+     "match": "different"
+    },
+    {
+     "name": "Lenox Hill",
+     "poster": "https://static.tvmaze.com/uploads/images/medium_portrait/261/653095.jpg",
+     "status": "ended",
+     "network": "Netflix",
+     "specific": true,
+     "match": "different"
+    },
+    {
+     "name": "Anthony Bourdain: Parts Unknown",
+     "poster": "https://static.tvmaze.com/uploads/images/medium_portrait/1/4660.jpg",
+     "status": "ended",
+     "network": "CNN",
+     "specific": false,
+     "match": "different"
+    },
+    {
+     "name": "The Layover",
+     "poster": "https://static.tvmaze.com/uploads/images/medium_portrait/347/868380.jpg",
+     "status": "ended",
+     "network": "Travel Channel",
+     "specific": false,
+     "match": "different"
+    },
+    {
+     "name": "Anthony Bourdain's a Cook's Tour",
+     "poster": null,
+     "status": null,
+     "network": null,
+     "specific": false,
+     "match": "different"
+    },
+    {
+     "name": "Chef's Table: BBQ",
+     "poster": "https://static.tvmaze.com/uploads/images/medium_portrait/269/674291.jpg",
+     "status": "ended",
+     "network": "Netflix",
+     "specific": false,
+     "match": "close"
+    },
+    {
+     "name": "Anthony Bourdain: No Reservations",
+     "poster": "https://static.tvmaze.com/uploads/images/medium_portrait/4/11386.jpg",
+     "status": "ended",
+     "network": "Travel Channel",
+     "specific": false,
+     "match": "different"
+    },
+    {
+     "name": "Our Great National Parks",
+     "poster": "https://static.tvmaze.com/uploads/images/medium_portrait/401/1004626.jpg",
+     "status": "ended",
+     "network": "Netflix",
+     "specific": false,
+     "match": "close"
+    },
+    {
+     "name": "Snowflake Mountain",
+     "poster": "https://static.tvmaze.com/uploads/images/medium_portrait/410/1027300.jpg",
+     "status": "ended",
+     "network": "Netflix",
+     "specific": false,
+     "match": "different"
+    },
+    {
+     "name": "Amazing Hotels: Life Beyond the Lobby",
+     "poster": "https://static.tvmaze.com/uploads/images/medium_portrait/576/1442464.jpg",
+     "status": "ended",
+     "network": "BBC Two",
+     "specific": false,
+     "match": "different"
+    },
+    {
+     "name": "The Reluctant Traveler",
+     "poster": "https://static.tvmaze.com/uploads/images/medium_portrait/594/1485922.jpg",
+     "status": "renewal pending",
+     "network": "Apple TV",
+     "specific": false,
+     "match": "different"
+    }
+   ]
+  }
+ },
+ "common": [
+  {
+   "name": "Blown Away",
+   "brands": 13
+  },
+  {
+   "name": "Life & Beth",
+   "brands": 13
+  },
+  {
+   "name": "Queer Eye: We're in Japan!",
+   "brands": 12
+  },
+  {
+   "name": "Somebody Feed Phil",
+   "brands": 11
+  },
+  {
+   "name": "Stanley Tucci: Searching for Italy",
+   "brands": 11
+  },
+  {
+   "name": "Better Things",
+   "brands": 11
+  },
+  {
+   "name": "Workin' Moms",
+   "brands": 11
+  },
+  {
+   "name": "Flavorful Origins",
+   "brands": 10
+  }
+ ]
+}

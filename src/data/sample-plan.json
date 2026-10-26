@@ -1,0 +1,116 @@
+{
+ "id": "parachute-gz743",
+ "brand": "Parachute",
+ "summary": "Parachute can place products in four home focused shows that align with its audience of ages under 25, 30 to 34, 35 to 44, leans female. Self serve ads on DIY genre across Channel 4, BBC One, and HGTV will reinforce brand visibility.",
+ "placements": [
+  {
+   "show": "Grand Designs",
+   "network": "Channel 4",
+   "status": "running",
+   "company": "Talkback, Talkback Thames, Boundless",
+   "poster": "https://static.tvmaze.com/uploads/images/medium_portrait/591/1478756.jpg",
+   "why": "This home design show matches Parachute's aesthetic and appeals to viewers ages under 25, 30 to 34, 35 to 44, leans female who value thoughtful living spaces.",
+   "send": "Parachute bedding set, one queen size",
+   "pitch": "Dear Set Decoration Team, Parachute offers premium bedding that would feel natural in Grand Designs' modern home interiors. A neatly made bed in a master bedroom reveal or folded linens on a styling table during a design consultation could showcase the product authentically within the show's architectural focus. The product is free with no paid placement required, and we can ship within a week. We believe your viewers who appreciate thoughtful design would connect with Parachute's clean aesthetic. Thank you for considering this collaboration. Best regards, Parachute"
+  },
+  {
+   "show": "Escape to the Country",
+   "network": "BBC One",
+   "status": "running",
+   "company": null,
+   "poster": "https://static.tvmaze.com/uploads/images/medium_portrait/624/1561172.jpg",
+   "why": "The focus on rural homes and lifestyle aligns with Parachute's cozy essentials for viewers ages under 25, 30 to 34, 35 to 44, leans female seeking comfort.",
+   "send": "Parachute throw blanket, two neutral colors",
+   "pitch": "Dear Props Team, Parachute's cozy throw blankets would complement Escape to the Country's rural home tours beautifully. Draped over a sofa in a cottage living room or folded at the foot of a bed during a property walkthrough would highlight the product's warmth naturally. The product is free with no paid placement required, and we can ship within a week. Your audience seeking countryside comfort would appreciate Parachute's soft textures in these authentic home settings. Thank you for your consideration. Warmly, Parachute"
+  },
+  {
+   "show": "Home Town",
+   "network": "HGTV",
+   "status": "running",
+   "company": null,
+   "poster": "https://static.tvmaze.com/uploads/images/medium_portrait/549/1373674.jpg",
+   "why": "DIY home renovation content resonates with Parachute's practical style and viewers ages under 25, 30 to 34, 35 to 44, leans female investing in their homes.",
+   "send": "Parachute towel set, one bath and two hand towels",
+   "pitch": "Dear Set Decoration Team, Parachute's quality towels would fit seamlessly into Home Town's renovation reveals. Stacked in a newly updated bathroom vanity or displayed on a rack during a kitchen refresh scene would demonstrate the product's everyday utility. The product is free with no paid placement required, and we can ship within a week. Viewers investing in home improvements would value seeing durable, stylish textiles in completed projects. Thank you for considering Parachute. Sincerely, Parachute"
+  },
+  {
+   "show": "The Repair Shop",
+   "network": "BBC One",
+   "status": "running",
+   "company": null,
+   "poster": "https://static.tvmaze.com/uploads/images/medium_portrait/610/1526147.jpg",
+   "why": "Restoration and craftsmanship themes fit Parachute's quality focus for viewers ages under 25, 30 to 34, 35 to 44, leans female who appreciate enduring design.",
+   "send": "Parachute cushion covers, two standard sizes",
+   "pitch": "Dear Props Team, Parachute's textile craftsmanship aligns with The Repair Shop's dedication to restoration. Cushion covers on a refurbished armchair or arranged on a workbench during an upholstery segment would honor the show's artisanal spirit. The product is free with no paid placement required, and we can ship within a week. Your audience who cherishes enduring quality would recognize Parachute's commitment to thoughtful making. Thank you for this opportunity. Respectfully, Parachute"
+  }
+ ],
+ "ads": {
+  "platforms": [
+   {
+    "name": "Universal Ads (Comcast)",
+    "url": "https://www.universalads.com/",
+    "how": "Self serve from about $100. Target viewers of content genres, plus age, gender and location. Reaches NBCUniversal, Fox, Paramount and others."
+   },
+   {
+    "name": "Amazon streaming TV ads",
+    "url": "https://advertising.amazon.com/solutions/products/streaming-tv-ads",
+    "how": "Self serve with no minimum spend. Runs on Prime Video, Twitch and Fire TV. Target by genre, curated title groups and audience segments."
+   }
+  ],
+  "genres": [
+   "DIY"
+  ],
+  "networks": [
+   "Channel 4",
+   "BBC One",
+   "HGTV"
+  ],
+  "audience": {
+   "ages": [
+    "under 25",
+    "30 to 34",
+    "35 to 44"
+   ],
+   "gender": "leans female"
+  },
+  "shows": [
+   "Grand Designs",
+   "The Great Interior Design Challenge",
+   "Grand Designs Australia",
+   "Stay Here",
+   "The Restoration Man",
+   "Escape to the Country"
+  ],
+  "note": "Self serve platforms sell genres and audiences, not single shows. These shows are why these genres were chosen."
+ },
+ "steps": [
+  {
+   "tool": "read_taste",
+   "summary": "Read 12 shows Parachute customers over-index on",
+   "ms": 1496
+  },
+  {
+   "tool": "read_shows",
+   "summary": "8 of 12 shows are still running or awaiting renewal",
+   "ms": 1
+  },
+  {
+   "tool": "choose_placements",
+   "summary": "Picked Grand Designs, Escape to the Country, Home Town, The Repair Shop",
+   "ms": 0
+  },
+  {
+   "tool": "plan_ads",
+   "summary": "Ads: DIY viewers, under 25, 30 to 34, 35 to 44, leans female",
+   "ms": 0
+  },
+  {
+   "tool": "finish",
+   "summary": "Wrote 4 pitch letters and the ad plan",
+   "ms": 0
+  }
+ ],
+ "qlooCalls": 15,
+ "model": "qwen3.8-max",
+ "createdAt": "2026-10-25T23:39:26.787Z"
+}
