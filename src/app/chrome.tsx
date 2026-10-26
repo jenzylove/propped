@@ -14,7 +14,7 @@ export function Mark({ size = 30 }: { size?: number }) {
 }
 
 export const REPO = "https://github.com/jenzylove/propped";
-export const SAMPLE = "/plan/parachute-gz743";
+export const SAMPLE = "/plan/parachute-v226n";
 
 export function Header() {
   return (

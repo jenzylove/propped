@@ -1,7 +1,7 @@
 {
- "id": "parachute-gz743",
+ "id": "parachute-v226n",
  "brand": "Parachute",
- "summary": "Parachute can place products in four home focused shows that align with its audience of ages under 25, 30 to 34, 35 to 44, leans female. Self serve ads on DIY genre across Channel 4, BBC One, and HGTV will reinforce brand visibility.",
+ "summary": "Pitch Grand Designs and Your Home Made Perfect first as they rank highest for the brand among likely candidates. Ads should target DIY genre viewers on HGTV, BBC Two, Channel 4, and BBC One to reach ages under 25, 30 to 34, 35 to 44, leans female.",
  "placements": [
   {
    "show": "Grand Designs",
@@ -9,39 +9,87 @@
    "status": "running",
    "company": "Talkback, Talkback Thames, Boundless",
    "poster": "https://static.tvmaze.com/uploads/images/medium_portrait/591/1478756.jpg",
-   "why": "This home design show matches Parachute's aesthetic and appeals to viewers ages under 25, 30 to 34, 35 to 44, leans female who value thoughtful living spaces.",
+   "why": "This documentary about ambitious home builds attracts viewers who care deeply about design and quality living spaces, matching your brand's focus on thoughtful home essentials.",
    "send": "Parachute bedding set, one queen size",
-   "pitch": "Dear Set Decoration Team, Parachute offers premium bedding that would feel natural in Grand Designs' modern home interiors. A neatly made bed in a master bedroom reveal or folded linens on a styling table during a design consultation could showcase the product authentically within the show's architectural focus. The product is free with no paid placement required, and we can ship within a week. We believe your viewers who appreciate thoughtful design would connect with Parachute's clean aesthetic. Thank you for considering this collaboration. Best regards, Parachute"
+   "pitch": "Dear set decoration team,\n\nParachute offers premium bedding that would fit naturally in Grand Designs scenes showcasing completed bedroom renovations or quiet moments in newly built master suites. Our soft linen duvet could rest on a bed during a final reveal or be folded neatly in a closet tour. The product is free with no paid placement required and we can ship within a week. We believe your audience appreciates quality home essentials that complement architectural vision. Please let us know if this works for an upcoming episode. Best regards, Parachute",
+   "chance": {
+    "tier": "likely",
+    "label": "Likely yes",
+    "why": "Unscripted shows dress real homes, kitchens and kit, and often take free product from brands."
+   },
+   "recipient": {
+    "greeting": "Dear set decoration team",
+    "line": "The set decoration team, care of the Talkback production office",
+    "person": null,
+    "role": null,
+    "company": "Talkback"
+   }
   },
   {
-   "show": "Escape to the Country",
-   "network": "BBC One",
-   "status": "running",
+   "show": "Your Home Made Perfect",
+   "network": "BBC Two",
+   "status": "renewal pending",
    "company": null,
-   "poster": "https://static.tvmaze.com/uploads/images/medium_portrait/624/1561172.jpg",
-   "why": "The focus on rural homes and lifestyle aligns with Parachute's cozy essentials for viewers ages under 25, 30 to 34, 35 to 44, leans female seeking comfort.",
+   "poster": "https://static.tvmaze.com/uploads/images/medium_portrait/191/479916.jpg",
+   "why": "This reality show features homeowners reimagining their spaces with virtual reality, drawing an audience invested in creating comfortable and personalized homes just like your customers.",
    "send": "Parachute throw blanket, two neutral colors",
-   "pitch": "Dear Props Team, Parachute's cozy throw blankets would complement Escape to the Country's rural home tours beautifully. Draped over a sofa in a cottage living room or folded at the foot of a bed during a property walkthrough would highlight the product's warmth naturally. The product is free with no paid placement required, and we can ship within a week. Your audience seeking countryside comfort would appreciate Parachute's soft textures in these authentic home settings. Thank you for your consideration. Warmly, Parachute"
-  },
-  {
-   "show": "Home Town",
-   "network": "HGTV",
-   "status": "running",
-   "company": null,
-   "poster": "https://static.tvmaze.com/uploads/images/medium_portrait/549/1373674.jpg",
-   "why": "DIY home renovation content resonates with Parachute's practical style and viewers ages under 25, 30 to 34, 35 to 44, leans female investing in their homes.",
-   "send": "Parachute towel set, one bath and two hand towels",
-   "pitch": "Dear Set Decoration Team, Parachute's quality towels would fit seamlessly into Home Town's renovation reveals. Stacked in a newly updated bathroom vanity or displayed on a rack during a kitchen refresh scene would demonstrate the product's everyday utility. The product is free with no paid placement required, and we can ship within a week. Viewers investing in home improvements would value seeing durable, stylish textiles in completed projects. Thank you for considering Parachute. Sincerely, Parachute"
+   "pitch": "Dear set decoration team,\n\nParachute throw blankets would suit Your Home Made Perfect scenes where homeowners envision cozy living areas or bedroom retreats through virtual reality. A textured throw could drape over a sofa in a redesigned lounge or accent a reading nook transformation. The product is free with no paid placement required and we can ship within a week. Your show celebrates personalized home comfort which aligns with our brand values. We would love to support your creative process. Best regards, Parachute",
+   "chance": {
+    "tier": "likely",
+    "label": "Likely yes",
+    "why": "Unscripted shows dress real homes, kitchens and kit, and often take free product from brands."
+   },
+   "recipient": {
+    "greeting": "Dear set decoration team",
+    "line": "The set decoration team, care of the Your Home Made Perfect production team at BBC Two",
+    "person": null,
+    "role": null,
+    "company": null
+   }
   },
   {
    "show": "The Repair Shop",
    "network": "BBC One",
    "status": "running",
-   "company": null,
+   "company": "Ricochet",
    "poster": "https://static.tvmaze.com/uploads/images/medium_portrait/610/1526147.jpg",
-   "why": "Restoration and craftsmanship themes fit Parachute's quality focus for viewers ages under 25, 30 to 34, 35 to 44, leans female who appreciate enduring design.",
-   "send": "Parachute cushion covers, two standard sizes",
-   "pitch": "Dear Props Team, Parachute's textile craftsmanship aligns with The Repair Shop's dedication to restoration. Cushion covers on a refurbished armchair or arranged on a workbench during an upholstery segment would honor the show's artisanal spirit. The product is free with no paid placement required, and we can ship within a week. Your audience who cherishes enduring quality would recognize Parachute's commitment to thoughtful making. Thank you for this opportunity. Respectfully, Parachute"
+   "why": "This heartwarming show about restoring cherished items appeals to people who value craftsmanship and sentimental home objects, aligning with your brand's ethos of meaningful home goods.",
+   "send": "Parachute cushion covers, set of four",
+   "pitch": "Dear set decoration team,\n\nParachute cushion covers could appear naturally in The Repair Shop workshop or finished restoration displays. They might sit on a restored armchair or complement vintage furniture in a completed project reveal. The product is free with no paid placement required and we can ship within a week. Your celebration of craftsmanship and cherished home items resonates with our commitment to meaningful home goods. We hope to contribute to your heartwarming stories. Best regards, Parachute",
+   "chance": {
+    "tier": "likely",
+    "label": "Likely yes",
+    "why": "Unscripted shows dress real homes, kitchens and kit, and often take free product from brands."
+   },
+   "recipient": {
+    "greeting": "Dear set decoration team",
+    "line": "The set decoration team, care of the Ricochet production office",
+    "person": null,
+    "role": null,
+    "company": "Ricochet"
+   }
+  },
+  {
+   "show": "Home Town",
+   "network": "HGTV",
+   "status": "running",
+   "company": "RTR Media Inc",
+   "poster": "https://static.tvmaze.com/uploads/images/medium_portrait/549/1373674.jpg",
+   "why": "This DIY reality series focuses on revitalizing family homes and communities, attracting viewers passionate about creating warm and functional living spaces that reflect your product's purpose.",
+   "send": "Parachute bath towel set, one white",
+   "pitch": "Dear set decoration team,\n\nParachute bath towels would fit seamlessly in Home Town bathroom renovations or family home updates. A plush towel set could be displayed in a refreshed master bath or stacked in a renovated laundry room. The product is free with no paid placement required and we can ship within a week. Your focus on creating warm functional spaces for families matches our dedication to everyday home comfort. We would be honored to be part of your community transformations. Best regards, Parachute",
+   "chance": {
+    "tier": "likely",
+    "label": "Likely yes",
+    "why": "Unscripted shows dress real homes, kitchens and kit, and often take free product from brands."
+   },
+   "recipient": {
+    "greeting": "Dear set decoration team",
+    "line": "The set decoration team, care of the RTR Media Inc production office",
+    "person": null,
+    "role": null,
+    "company": "RTR Media Inc"
+   }
   }
  ],
  "ads": {
@@ -49,21 +97,20 @@
    {
     "name": "Universal Ads (Comcast)",
     "url": "https://www.universalads.com/article/advertise-on-tv-without-a-big-budget",
-    "how": ""
+    "how": "Self serve from as little as $100, with no minimum commitment. Target viewers of content genres, plus age, gender and location. Reaches NBCUniversal, Fox, Paramount and others."
    },
    {
     "name": "Amazon Sponsored TV",
     "url": "https://advertising.amazon.com/blog/unboxed-2023-sponsored-tv",
-    "how": ""
+    "how": "Self serve with no minimum spend, for brands that sell on Amazon in the US. Runs on Prime Video, Twitch and Fire TV apps. Target by genre and audience."
    }
   ],
   "genres": [
    "DIY"
   ],
   "networks": [
-   "Channel 4",
-   "BBC One",
-   "HGTV"
+   "HGTV",
+   "Channel 4"
   ],
   "audience": {
    "ages": [
@@ -81,23 +128,31 @@
    "The Restoration Man",
    "Escape to the Country"
   ],
-  "note": "Self serve platforms sell genres and audiences, not single shows. These shows are why these genres were chosen."
+  "note": "Self serve platforms sell genres and audiences, not single shows. These shows are why these genres were chosen.",
+  "setup": [
+   "Open Universal Ads and start a new campaign. It is self serve, from as little as $100.",
+   "Audience: people aged under 25, 30 to 34, 35 to 44, leaning female.",
+   "What they watch: DIY programming.",
+   "Networks to favor where offered: HGTV, Channel 4.",
+   "Location: only where you ship.",
+   "Budget: start with $100 over one week, then keep what works."
+  ]
  },
  "steps": [
   {
    "tool": "read_taste",
-   "summary": "Read 12 shows Parachute customers over-index on",
-   "ms": 1496
+   "summary": "Read 50 shows Parachute customers over-index on",
+   "ms": 46775
   },
   {
    "tool": "read_shows",
-   "summary": "8 of 12 shows are still running or awaiting renewal",
-   "ms": 1
+   "summary": "24 of 50 are still filming; 10 of the best are likely to take free product",
+   "ms": 2172
   },
   {
    "tool": "choose_placements",
-   "summary": "Picked Grand Designs, Escape to the Country, Home Town, The Repair Shop",
-   "ms": 0
+   "summary": "Picked Grand Designs, Your Home Made Perfect, The Repair Shop, Home Town",
+   "ms": 469
   },
   {
    "tool": "plan_ads",
@@ -106,11 +161,11 @@
   },
   {
    "tool": "finish",
-   "summary": "Wrote 4 pitch letters and the ad plan",
+   "summary": "Wrote 4 pitch letters and the ad setup",
    "ms": 0
   }
  ],
  "qlooCalls": 15,
  "model": "qwen3.8-max",
- "createdAt": "2026-10-25T23:39:26.787Z"
+ "createdAt": "2026-10-26T23:01:21.167Z"
 }

@@ -195,7 +195,9 @@ export async function runPlan(brand: string, emit: (s: Step) => void): Promise<P
   record("read_taste", `Read ${data.ranked?.length ?? data.shows.length} shows ${data.brand.name} customers over-index on`, t0);
   const audience = audienceOf(data);
   const allGenres = [...new Set(data.shows.flatMap((s) => s.info?.genres ?? []))];
-  const allNetworks = [...new Set(data.shows.map((s) => s.info?.network).filter(Boolean) as string[])];
+  // Networks that sell no ads (the BBC, PBS) can't be part of an ad plan.
+  const NO_ADS = /^(bbc|pbs)/i;
+  const allNetworks = [...new Set(data.shows.map((s) => s.info?.network).filter((n): n is string => !!n && !NO_ADS.test(n)))];
   const tc0 = Date.now();
   const cands = await candidatesFor(data);
   const realistic = cands.list.filter((c) => c.chance.tier !== "adbuy");
