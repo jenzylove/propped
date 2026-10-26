@@ -27,7 +27,7 @@ export async function POST(req: Request) {
       try {
         const plan = await runPlan(brand, (step) => send({ type: "step", step }));
         try {
-          await put(`plans/${plan.id}.json`, JSON.stringify(plan), { access: "public", contentType: "application/json", addRandomSuffix: false });
+          await put(`plans/${plan.id}.json`, JSON.stringify(plan), { access: "public", contentType: "application/json", addRandomSuffix: false, allowOverwrite: true, cacheControlMaxAge: 60 });
         } catch {
           /* saving is best effort; the plan is still returned */
         }

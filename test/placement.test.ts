@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { chanceOf, recipientOf } from "@/lib/placement";
+import { allowsPlacement, chanceOf, recipientOf } from "@/lib/placement";
 
 describe("chanceOf", () => {
   it("rates unscripted shows as likely", () => {
@@ -28,5 +28,18 @@ describe("recipientOf", () => {
     expect(recipientOf("Alone", [], "Leftfield Pictures", "History").line).toBe("The set decoration team, care of the Leftfield Pictures production office");
     expect(recipientOf("Alone", [], null, "History").line).toBe("The set decoration team, care of the Alone production team at History");
     expect(recipientOf("Alone", [], null, null).greeting).toBe("Dear set decoration team");
+  });
+});
+
+describe("allowsPlacement", () => {
+  it("rules out public broadcasters that take no product placement", () => {
+    expect(allowsPlacement("BBC One")).toBe(false);
+    expect(allowsPlacement("BBC Two")).toBe(false);
+    expect(allowsPlacement("PBS")).toBe(false);
+  });
+  it("allows commercial networks and unknown ones", () => {
+    expect(allowsPlacement("Channel 4")).toBe(true);
+    expect(allowsPlacement("HGTV")).toBe(true);
+    expect(allowsPlacement(null)).toBe(true);
   });
 });

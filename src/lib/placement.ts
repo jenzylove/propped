@@ -11,6 +11,10 @@ const UNSCRIPTED = /reality|documentary|game show|talk show|variety|news|sports|
 // Broadcast networks and the biggest streamers: scripted shows here rarely take an unknown brand without an ad buy.
 const BIG = new Set(["abc", "nbc", "cbs", "fox", "the cw", "apple tv", "apple tv+", "netflix", "hbo", "max", "hbo max", "prime video", "amazon prime video", "disney+", "hulu", "paramount+", "peacock", "bbc one", "itv1"]);
 
+// Public broadcasters that take no product placement in their own shows.
+const NO_PLACEMENT = /^(bbc|pbs\b|cbc gem|abc iview|abc tv|sbs on demand)/i;
+export const allowsPlacement = (network: string | null) => !network || !NO_PLACEMENT.test(network.trim());
+
 export function chanceOf(kind: string | null, network: string | null): Chance {
   if (kind && UNSCRIPTED.test(kind)) {
     return { tier: "likely", label: "Likely yes", why: "Unscripted shows dress real homes, kitchens and kit, and often take free product from brands." };

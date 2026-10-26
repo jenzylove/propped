@@ -1,10 +1,12 @@
-export const STAGES = ["not_sent", "pitched", "replied", "shipped", "on_screen"] as const;
+export const STAGES = ["not_sent", "pitched", "no_reply", "declined", "replied", "shipped", "on_screen"] as const;
 export type Stage = (typeof STAGES)[number];
 export type Board = Record<string, Stage>;
 
 export const STAGE_LABELS: Record<Stage, string> = {
   not_sent: "Not sent",
   pitched: "Pitched",
+  no_reply: "No reply",
+  declined: "Declined",
   replied: "Replied",
   shipped: "Shipped",
   on_screen: "On screen",

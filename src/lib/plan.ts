@@ -5,7 +5,8 @@ import { chat, type ChatMessage, type ToolDef } from "./llm";
 import { brandShows, pool, type BrandShows } from "./shows";
 import { AGE_KEYS, type DemoMatch } from "./core/rank";
 import { companyOf, setCrew, tvInfo, type ShowInfo } from "./enrich";
-import { chanceOf, recipientOf, TIER_ORDER, type Chance, type Recipient } from "./placement";
+import { allowsPlacement, chanceOf, recipientOf, TIER_ORDER, type Chance, type Recipient } from "./placement";
+import { companySite } from "./company";
 
 export interface Placement {
   show: string;
@@ -18,6 +19,36 @@ export interface Placement {
   pitch: string;
   chance?: Chance;
   recipient?: Recipient;
+  /** The production company's own website, when Wikidata knows it. */
+  site?: string | null;
+  /** What the agent did next, driven by the pitch board. */
+  declined?: boolean;
+  replacedBy?: string;
+  replaces?: string;
+  followUp?: string;
+  replyNote?: string;
+  watch?: string;
+  onScreen?: string;
+}
+
+/** A show the agent can still pitch later, kept so a decline can be swapped for the next best set. */
+export interface SavedCandidate {
+  name: string;
+  rank: number;
+  network: string | null;
+  kind: string | null;
+  poster: string | null;
+  status: string;
+  tvmazeId: number | null;
+  nextEpisode: string | null;
+  chance: Chance;
+}
+
+export interface Move {
+  at: string;
+  show: string;
+  kind: "swap" | "follow_up" | "reply" | "watch" | "on_screen";
+  summary: string;
 }
 
 export interface Plan {
@@ -38,6 +69,17 @@ export interface Plan {
   qlooCalls: number;
   model: string;
   createdAt: string;
+  audience?: { ages: string[]; gender: string };
+  candidates?: SavedCandidate[];
+  moves?: Move[];
+}
+
+/** Who to write to for a show, and where their production office lives on the web. */
+export async function contactFor(show: string, tvmazeId: number | null, network: string | null) {
+  const [company, crew] = await Promise.all([companyOf(show), setCrew(tvmazeId)]);
+  const recipient = recipientOf(show, crew, company, network);
+  const site = recipient.company ? await companySite(recipient.company).catch(() => null) : null;
+  return { company, recipient, site: site?.url ?? null };
 }
 
 export type Step = { tool: string; summary: string; ms: number };
@@ -83,7 +125,7 @@ async function candidatesFor(data: BrandShows): Promise<{ list: Candidate[]; liv
   const infos = await pool(ranked, 3, async (r) => known.get(r.id)?.info ?? (await tvInfo(r.name)));
   const list = ranked
     .map((r, i) => ({ r, info: infos[i] as Info | null, i }))
-    .filter((x) => live(x.info))
+    .filter((x) => live(x.info) && allowsPlacement(x.info!.network))
     .map(({ r, info, i }) => ({
       name: info!.name,
       rank: i + 1,
@@ -196,7 +238,7 @@ export async function runPlan(brand: string, emit: (s: Step) => void): Promise<P
   const audience = audienceOf(data);
   const allGenres = [...new Set(data.shows.flatMap((s) => s.info?.genres ?? []))];
   // Networks that sell no ads (the BBC, PBS) can't be part of an ad plan.
-  const NO_ADS = /^(bbc|pbs)/i;
+  const NO_ADS = /^(bbc|pbs\b)/i;
   const allNetworks = [...new Set(data.shows.map((s) => s.info?.network).filter((n): n is string => !!n && !NO_ADS.test(n)))];
   const tc0 = Date.now();
   const cands = await candidatesFor(data);
@@ -204,7 +246,7 @@ export async function runPlan(brand: string, emit: (s: Step) => void): Promise<P
   const likelyCount = cands.list.filter((c) => c.chance.tier === "likely").length;
   record("read_shows", `${cands.liveCount} of ${cands.total} are still filming; ${likelyCount} of the best are likely to take free product`, tc0);
 
-  let picks: { cand: Candidate; why: string; recipient: Recipient; company: string | null }[] = [];
+  let picks: { cand: Candidate; why: string; recipient: Recipient; company: string | null; site: string | null }[] = [];
   let ads: { genres: string[]; networks: string[] } | null = null;
   let done: { summary: string; placements: { show: string; send: string; pitch: string }[] } | null = null;
 
@@ -253,10 +295,7 @@ export async function runPlan(brand: string, emit: (s: Step) => void): Promise<P
           return [{ cand: c, why: String(p.why).slice(0, 300) }];
         });
         picks = await Promise.all(
-          chosen.map(async (p) => {
-            const [company, crew] = await Promise.all([companyOf(p.cand.info.name), setCrew(p.cand.info.tvmazeId)]);
-            return { ...p, company, recipient: recipientOf(p.cand.name, crew, company, p.cand.info.network) };
-          }),
+          chosen.map(async (p) => ({ ...p, ...(await contactFor(p.cand.info.name, p.cand.info.tvmazeId, p.cand.info.network)) })),
         );
         result = { accepted: picks.map((p) => ({ show: p.cand.name, greeting: p.recipient.greeting, chance: p.cand.chance.label })), rejected };
         const named = picks.some((p) => p.recipient.person) ? ", with the people who dress their sets" : "";
@@ -300,8 +339,22 @@ export async function runPlan(brand: string, emit: (s: Step) => void): Promise<P
         pitch: addressed(w?.pitch ?? "", p.recipient.greeting),
         chance: p.cand.chance,
         recipient: p.recipient,
+        site: p.site,
       };
     }),
+    audience,
+    candidates: cands.list.map((c) => ({
+      name: c.name,
+      rank: c.rank,
+      network: c.info.network,
+      kind: c.info.kind,
+      poster: c.info.poster,
+      status: c.info.status,
+      tvmazeId: c.info.tvmazeId,
+      nextEpisode: c.info.nextEpisode,
+      chance: c.chance,
+    })),
+    moves: [],
     ads: {
       platforms: PLATFORMS,
       genres: a.genres,

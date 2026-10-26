@@ -3,9 +3,29 @@
 import { useEffect, useRef, useState } from "react";
 import { STAGES, STAGE_LABELS, type Board, type Stage } from "@/lib/board";
 
-export default function PitchBoard({ planId, shows }: { planId: string; shows: string[] }) {
+const PITCHED: Stage[] = ["pitched", "no_reply", "declined", "replied", "shipped", "on_screen"];
+const REPLIED: Stage[] = ["replied", "shipped", "on_screen"];
+const SHIPPED: Stage[] = ["shipped", "on_screen"];
+
+export interface NextResult {
+  plan: unknown;
+  moves: { show: string; kind: string; summary: string }[];
+}
+
+export default function PitchBoard({
+  planId,
+  shows,
+  onNext,
+}: {
+  planId: string;
+  shows: string[];
+  onNext?: (r: NextResult) => void;
+}) {
   const [board, setBoard] = useState<Board>({});
   const [errors, setErrors] = useState<Record<string, boolean>>({});
+  const [running, setRunning] = useState(false);
+  const [moves, setMoves] = useState<NextResult["moves"] | null>(null);
+  const [failed, setFailed] = useState("");
   const seq = useRef<Record<string, number>>({});
 
   useEffect(() => {
@@ -44,20 +64,36 @@ export default function PitchBoard({ planId, shows }: { planId: string; shows: s
     }
   }
 
-  const order = (s: Stage) => STAGES.indexOf(s);
-  const total = shows.length;
-  const pitched = shows.filter((s) => order(stageOf(s)) >= 1).length;
-  const replied = shows.filter((s) => order(stageOf(s)) >= 2).length;
-  const shipped = shows.filter((s) => order(stageOf(s)) >= 3).length;
-  const onScreen = shows.filter((s) => stageOf(s) === "on_screen").length;
-  const parts = [`${pitched} of ${total} pitched`];
-  if (replied) parts.push(`${replied} replied`);
-  if (shipped) parts.push(`${shipped} shipped`);
-  if (onScreen) parts.push(`${onScreen} on screen`);
+  async function next() {
+    setRunning(true);
+    setFailed("");
+    setMoves(null);
+    try {
+      const res = await fetch(`/api/plan/${planId}/next`, { method: "POST" });
+      const j = await res.json().catch(() => ({}));
+      if (!res.ok) throw new Error(j.error || "The agent couldn't finish its next move. Try again.");
+      setMoves(j.moves ?? []);
+      onNext?.(j as NextResult);
+    } catch (e) {
+      setFailed((e as Error).message);
+    } finally {
+      setRunning(false);
+    }
+  }
+
+  const count = (set: Stage[]) => shows.filter((s) => set.includes(stageOf(s))).length;
+  const parts = [`${count(PITCHED)} of ${shows.length} pitched`];
+  if (count(REPLIED)) parts.push(`${count(REPLIED)} replied`);
+  if (count(["declined"])) parts.push(`${count(["declined"])} declined`);
+  if (count(SHIPPED)) parts.push(`${count(SHIPPED)} shipped`);
+  if (count(["on_screen"])) parts.push(`${count(["on_screen"])} on screen`);
+  const waiting = shows.some((s) => ["no_reply", "declined", "replied", "shipped", "on_screen"].includes(stageOf(s)));
 
   return (
     <div style={{ maxWidth: 980 }}>
-      <p style={{ fontSize: 16, margin: "0 0 12px" }} aria-live="polite">{parts.join(", ")}</p>
+      <p style={{ fontSize: 16, margin: "0 0 12px" }} aria-live="polite">
+        {parts.join(", ")}
+      </p>
       <div style={{ borderTop: "2px solid var(--ink)" }}>
         {shows.map((show) => {
           const current = stageOf(show);
@@ -67,6 +103,8 @@ export default function PitchBoard({ planId, shows }: { planId: string; shows: s
               <div role="group" aria-label={`Stage for ${show}`} style={{ display: "flex", flexWrap: "wrap", gap: 6 }}>
                 {STAGES.map((s) => {
                   const on = s === current;
+                  const bad = s === "declined" || s === "no_reply";
+                  const color = bad ? "var(--orange)" : "var(--green)";
                   return (
                     <button
                       key={s}
@@ -75,11 +113,11 @@ export default function PitchBoard({ planId, shows }: { planId: string; shows: s
                       onClick={() => choose(show, s)}
                       style={{
                         font: "inherit",
-                        fontSize: 15,
-                        padding: "6px 12px",
+                        fontSize: 14,
+                        padding: "6px 11px",
                         borderRadius: 999,
-                        border: `1px solid ${on ? "var(--green)" : "var(--rule)"}`,
-                        background: on ? "var(--green)" : "transparent",
+                        border: `1px solid ${on ? color : "var(--rule)"}`,
+                        background: on ? color : "transparent",
                         color: on ? "#fff" : "inherit",
                         cursor: "pointer",
                       }}
@@ -90,11 +128,33 @@ export default function PitchBoard({ planId, shows }: { planId: string; shows: s
                 })}
               </div>
               {errors[show] && (
-                <div role="alert" style={{ flexBasis: "100%", fontSize: 15 }}>Couldn’t save, try again</div>
+                <div role="alert" style={{ flexBasis: "100%", fontSize: 15 }}>
+                  Couldn’t save, try again
+                </div>
               )}
             </div>
           );
         })}
+      </div>
+      <div style={{ marginTop: 22 }}>
+        <button className="copy" onClick={() => void next()} disabled={running} style={{ marginTop: 0, fontSize: 17, padding: "13px 22px" }}>
+          {running ? "The agent is working…" : "Take the next move"}
+        </button>
+        <p className="muted" style={{ fontSize: 15, marginTop: 10, maxWidth: 680 }}>
+          {waiting
+            ? "Mark what happened above, then let the agent act: a no gets the next best set, silence gets a follow up, a reply gets an answer, shipped product gets a watch plan."
+            : "Mark each show as you hear back. A no, silence, a reply or a shipment gives the agent its next move."}
+        </p>
+        {failed && (
+          <p role="alert" style={{ color: "var(--orange)", fontWeight: 600 }}>
+            {failed}
+          </p>
+        )}
+        {moves && (
+          <ul style={{ margin: "14px 0 0", paddingLeft: 20 }}>
+            {moves.length ? moves.map((m) => <li key={m.show + m.kind} style={{ padding: "4px 0" }}>{m.summary}</li>) : <li>Nothing new to act on yet.</li>}
+          </ul>
+        )}
       </div>
     </div>
   );

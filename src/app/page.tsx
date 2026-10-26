@@ -44,9 +44,9 @@ const STEPS = [
     d: "The agent looks at every show your customers watch that is still filming, rates how likely each is to take free product, and writes a letter to the people who dress the set, with what to send.",
   },
   {
-    t: "Track every pitch",
-    s: "Pitched, replied, shipped, on screen",
-    d: "A pitch board on the plan’s link, so you and your team see where each show stands.",
+    t: "The agent keeps going",
+    s: "Until you are on screen",
+    d: "Mark each show on the pitch board. A no gets the next best set and a new letter, silence gets a follow up, a reply gets an answer, shipped product gets a watch plan from the real air dates.",
   },
 ];
 
@@ -57,7 +57,7 @@ const FAQ = [
   },
   {
     q: "Who do I send the letter to?",
-    a: "Each letter names who it goes to: the production designer when the show lists one, and the production company’s office that makes the show. Propped never sends anything for you; tap Email it and the letter is ready in your mail app.",
+    a: "Each letter names who it goes to: the production designer when the show lists one, and the production company’s office that makes the show. Each one links to the company’s website when it is known, and to a search for its production office. Propped never sends anything for you.",
   },
   {
     q: "Which shows will actually say yes?",

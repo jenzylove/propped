@@ -10,7 +10,7 @@ async function load(id: string): Promise<PlanData | null> {
   if (!/^[a-z0-9-]{3,60}$/.test(id)) return null;
   try {
     const meta = await head(`plans/${id}.json`);
-    const res = await fetch(meta.url, { cache: "no-store" });
+    const res = await fetch(`${meta.url}?t=${Date.now()}`, { cache: "no-store" });
     if (!res.ok) return null;
     return (await res.json()) as PlanData;
   } catch {
