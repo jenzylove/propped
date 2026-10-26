@@ -85,7 +85,7 @@ const TOOLS: ToolDef[] = [
     type: "function",
     function: {
       name: "choose_placements",
-      description: "Pick up to 4 shows to pitch for product placement, only from the placeable list (running or awaiting renewal, live action). For each, one sentence a founder would understand on why it fits: what about the show and its viewers matches the brand (genre, tone, audience fit, made for this brand). Never mention status or field names. If you mention the audience, use exactly the audience wording from the user message; never restate ages differently.",
+      description: "Pick up to 4 shows to pitch for product placement, only from the placeable list (running or awaiting renewal, live action). For each, one sentence a founder would understand on why it fits: what about the show and its viewers matches the brand (genre, tone, audience fit, made for this brand). Never mention status or field names. Never list ages or gender; say it in words a person would use, like \"a crowd close to your customers\" when audience_fit is the same people.",
       parameters: {
         type: "object",
         properties: { picks: { type: "array", items: { type: "object", properties: { show: { type: "string" }, why: { type: "string" } }, required: ["show", "why"] } } },
@@ -110,7 +110,7 @@ const TOOLS: ToolDef[] = [
     function: {
       name: "finish",
       description:
-        "Finish. For each chosen placement: what to send (product and quantity, short), and a pitch letter of 90 to 140 words to the production company's set decoration and props team. The letter should: name the show; suggest one or two natural places the product could sit in a scene, as ideas, matched to the show's genre and tone (for example a bar fridge, a kitchen counter, a gym bag); say the product is free with no paid placement required; offer to ship within a week; sign off from the brand. Don't invent facts about episodes, characters or the brand's history. Then a two sentence summary for the founder.",
+        "Finish. For each chosen placement: what to send (product and quantity, short), and a pitch letter of 90 to 140 words to the production company's set decoration and props team. The letter should: name the show; suggest one or two natural places the product could sit in a scene, as ideas, matched to the show's genre and tone (for example a bar fridge, a kitchen counter, a gym bag); say the product is free with no paid placement required; offer to ship within a week; sign off from the brand. Don't invent facts about episodes, characters or the brand's history. Then a two sentence summary for the founder: which shows to pitch first and what the ads should target. Nothing has been sent or bought yet, so never say secured, booked, placed or guaranteed.",
       parameters: {
         type: "object",
         properties: {
