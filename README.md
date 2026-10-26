@@ -34,7 +34,9 @@ Getting your product on a TV set is mostly free. Prop and set decoration teams t
 
 1. **Type your brand.** Propped asks Qloo which TV shows people who love your brand watch far more than everyone else.
 2. **See your shows, ranked for you.** Shows every brand gets (the big sitcoms) are pushed down, so the list fits your brand and not the whole country. Each show gets its live status, network, poster and how close its audience is to yours.
-3. **Get on them.** The Propped agent picks the shows still filming, writes a pitch letter to each one's set decoration and props team, says what to send, and plans a self serve TV ad campaign for the same viewers, from about $100.
+3. **Be on TV this week.** The exact settings for a self serve TV campaign aimed at the same viewers (ages, genres, networks, a $100 starter budget), ready to paste into Universal Ads.
+4. **Pitch the sets that will say yes.** The agent checks every show your customers watch that is still filming, rates how likely each is to take free product, and writes a letter to the people who dress the set, care of the production company, with what to send. Copy it or tap Email it.
+5. **Track every pitch.** A pitch board on the plan's link: pitched, replied, shipped, on screen.
 
 <p align="center">
   <img src=".github/plan.png" width="720" alt="A Propped placement pack for Parachute" />
