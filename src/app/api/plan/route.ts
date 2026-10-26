@@ -1,4 +1,4 @@
-import { put } from "@vercel/blob";
+import { savePlan } from "@/lib/store";
 import { runPlan } from "@/lib/plan";
 import { LlmUnavailable, llmConfigured } from "@/lib/llm";
 
@@ -27,7 +27,7 @@ export async function POST(req: Request) {
       try {
         const plan = await runPlan(brand, (step) => send({ type: "step", step }));
         try {
-          await put(`plans/${plan.id}.json`, JSON.stringify(plan), { access: "public", contentType: "application/json", addRandomSuffix: false, allowOverwrite: true, cacheControlMaxAge: 60 });
+          await savePlan(plan, true);
         } catch {
           /* saving is best effort; the plan is still returned */
         }

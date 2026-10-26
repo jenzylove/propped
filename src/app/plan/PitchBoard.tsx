@@ -48,13 +48,14 @@ export default function PitchBoard({
     if (prev === stage) return;
     const n = (seq.current[show] ?? 0) + 1;
     seq.current[show] = n;
-    setBoard((b) => ({ ...b, [show]: stage }));
+    const nextBoard = { ...board, [show]: stage };
+    setBoard(nextBoard);
     setErrors((e) => ({ ...e, [show]: false }));
     try {
       const res = await fetch(`/api/board/${planId}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ show, stage }),
+        body: JSON.stringify({ show, stage, board: nextBoard }),
       });
       if (!res.ok) throw new Error("save failed");
     } catch {
@@ -69,7 +70,11 @@ export default function PitchBoard({
     setFailed("");
     setMoves(null);
     try {
-      const res = await fetch(`/api/plan/${planId}/next`, { method: "POST" });
+      const res = await fetch(`/api/plan/${planId}/next`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ board }),
+      });
       const j = await res.json().catch(() => ({}));
       if (!res.ok) throw new Error(j.error || "The agent couldn't finish its next move. Try again.");
       setMoves(j.moves ?? []);

@@ -35,22 +35,25 @@ export async function nextMoves(plan: Plan, board: Board): Promise<{ plan: Plan;
     if (!stage || p.declined) continue;
 
     if (stage === "declined") {
-      const next = (plan.candidates ?? []).find((c) => !taken.has(c.name.toLowerCase()) && c.chance.tier !== "adbuy");
+      const options = (plan.candidates ?? []).filter((c) => !taken.has(c.name.toLowerCase()) && c.chance.tier !== "adbuy").slice(0, 5);
       p.declined = true;
-      if (!next) {
+      if (!options.length) {
         add(p.show, "swap", `${p.show} said no, and no other realistic set is filming right now. Lean on the TV campaign.`);
         continue;
       }
-      const contact = await contactFor(next.name, next.tvmazeId, next.network);
-      const out = await write<{ why: string; send: string; pitch: string }>(
-        `Brand: ${plan.brand}. Its customers' audience: ${plan.audience?.ages.join(", ") || "not known"}, ${plan.audience?.gender ?? ""}.
-The show ${p.show} declined. Pitch this show instead: ${next.name} (${next.kind ?? "series"} on ${next.network ?? "TV"}, still filming).
-What the brand sent the last show: ${p.send}.
+      const list = options.map((c) => `${c.name} (${c.kind ?? "series"} on ${c.network ?? "TV"}${c.genres?.length ? `; ${c.genres.join(", ")}` : ""})`).join("\n");
+      const out = await write<{ show: string; why: string; send: string; pitch: string }>(
+        `Brand: ${plan.brand}. What it sent the last show: ${p.send}.
+The show ${p.show} declined. Choose the ONE show below whose sets could most naturally show this product (think about what is on screen: homes, kitchens, bars, workshops, outdoors), all still filming:
+${list}
 Return JSON with:
-"why": one sentence a founder would understand on why ${next.name} fits ${plan.brand} (genre, tone, its viewers), no ages, no field words;
+"show": the exact name of the show you chose, from the list;
+"why": one sentence a founder would understand on why it fits ${plan.brand} (what is on its sets, its tone, its viewers), no ages, no field words;
 "send": what to send, product and quantity, short;
 "pitch": a letter of 90 to 140 words to the show's set decoration and props team. Suggest one or two natural places the product could sit in a scene, matched to the show. Say the product is free with no paid placement required, offer to ship within a week, sign off from ${plan.brand}.`,
       );
+      const next = options.find((c) => c.name.toLowerCase() === String(out.show ?? "").toLowerCase().trim()) ?? options[0];
+      const contact = await contactFor(next.name, next.tvmazeId, next.network);
       const swap: Placement = {
         show: next.name,
         network: next.network,

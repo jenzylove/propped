@@ -41,6 +41,7 @@ export interface SavedCandidate {
   status: string;
   tvmazeId: number | null;
   nextEpisode: string | null;
+  genres?: string[];
   chance: Chance;
 }
 
@@ -219,7 +220,9 @@ const eq = (a: string, b: string) => a.toLowerCase().trim() === b.toLowerCase().
 
 /** Make sure a letter opens with the right greeting, whatever the model wrote first. */
 export function addressed(pitch: string, greeting: string) {
-  const body = pitch.trim().replace(/^dear[^\n,]*,?\s*/i, "");
+  // Drop any greeting lines the model wrote ("Dear ...", "Hello ...", "Hi ..."), then add the right one once.
+  let body = pitch.trim();
+  for (let i = 0; i < 3; i++) body = body.replace(/^(dear|hello|hi|hey|greetings|good (morning|afternoon))\b[^\n]{0,80}?(,|\n)\s*/i, "");
   return body ? `${greeting},\n\n${body}` : "";
 }
 
@@ -352,6 +355,7 @@ export async function runPlan(brand: string, emit: (s: Step) => void): Promise<P
       status: c.info.status,
       tvmazeId: c.info.tvmazeId,
       nextEpisode: c.info.nextEpisode,
+      genres: c.info.genres,
       chance: c.chance,
     })),
     moves: [],

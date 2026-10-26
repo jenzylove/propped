@@ -1,8 +1,7 @@
-import { head, put } from "@vercel/blob";
 import { nextMoves } from "@/lib/next";
-import { cleanBoard, PLAN_ID_RE } from "@/lib/board";
+import { cleanBoard, PLAN_ID_RE, type Board } from "@/lib/board";
 import { LlmUnavailable, llmConfigured } from "@/lib/llm";
-import type { Plan } from "@/lib/plan";
+import { readBoard, readPlan, savePlan } from "@/lib/store";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -11,17 +10,7 @@ export const maxDuration = 120;
 const RUNS_PER_HOUR = 20;
 const runs = new Map<string, number[]>();
 
-async function readJson<T>(path: string): Promise<T | null> {
-  try {
-    const meta = await head(path);
-    const res = await fetch(`${meta.url}?t=${Date.now()}`, { cache: "no-store" });
-    return res.ok ? ((await res.json()) as T) : null;
-  } catch {
-    return null;
-  }
-}
-
-// POST /api/plan/<id>/next: the agent reads the pitch board and takes its next moves.
+// POST /api/plan/<id>/next { board? }: the agent reads the pitch board and takes its next moves.
 export async function POST(req: Request, ctx: { params: Promise<{ id: string }> }) {
   const { id } = await ctx.params;
   if (!PLAN_ID_RE.test(id)) return Response.json({ error: "Not found" }, { status: 404 });
@@ -33,20 +22,13 @@ export async function POST(req: Request, ctx: { params: Promise<{ id: string }> 
   recent.push(now);
   runs.set(ip, recent);
 
-  const plan = await readJson<Plan>(`plans/${id}.json`);
+  const plan = await readPlan(id);
   if (!plan) return Response.json({ error: "Plan not found" }, { status: 404 });
-  const board = cleanBoard(await readJson(`boards/${id}.json`));
+  const sent = ((await req.json().catch(() => null)) as { board?: unknown } | null)?.board;
+  const board: Board = sent ? cleanBoard(sent) : await readBoard(id);
   try {
     const out = await nextMoves(plan, board);
-    if (out.moves.length) {
-      await put(`plans/${id}.json`, JSON.stringify(out.plan), {
-        access: "public",
-        contentType: "application/json",
-        addRandomSuffix: false,
-        allowOverwrite: true,
-        cacheControlMaxAge: 60,
-      });
-    }
+    if (out.moves.length) await savePlan(out.plan);
     return Response.json(out, { headers: { "Cache-Control": "no-store" } });
   } catch (e) {
     const message = e instanceof LlmUnavailable ? "The planning model is unavailable right now." : "The agent couldn't finish its next move. Try again.";

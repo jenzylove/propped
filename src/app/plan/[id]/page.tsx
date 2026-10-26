@@ -1,21 +1,14 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
-import { head } from "@vercel/blob";
+import { readPlan } from "@/lib/store";
 import { PlanView, type PlanData } from "../PlanView";
 
 export const dynamic = "force-dynamic";
 
 async function load(id: string): Promise<PlanData | null> {
   if (!/^[a-z0-9-]{3,60}$/.test(id)) return null;
-  try {
-    const meta = await head(`plans/${id}.json`);
-    const res = await fetch(`${meta.url}?t=${Date.now()}`, { cache: "no-store" });
-    if (!res.ok) return null;
-    return (await res.json()) as PlanData;
-  } catch {
-    return null;
-  }
+  return (await readPlan(id)) as PlanData | null;
 }
 
 export async function generateMetadata({ params }: { params: Promise<{ id: string }> }): Promise<Metadata> {
