@@ -37,19 +37,8 @@ export interface Plan {
 
 export type Step = { tool: string; summary: string; ms: number };
 
-// Documented self serve options (sources in docs/spikes/feasibility.md). Show level buying isn't offered.
-export const PLATFORMS = [
-  {
-    name: "Universal Ads (Comcast)",
-    url: "https://www.universalads.com/",
-    how: "Self serve from about $100. Target viewers of content genres, plus age, gender and location. Reaches NBCUniversal, Fox, Paramount and others.",
-  },
-  {
-    name: "Amazon streaming TV ads",
-    url: "https://advertising.amazon.com/solutions/products/streaming-tv-ads",
-    how: "Self serve with no minimum spend. Runs on Prime Video, Twitch and Fire TV. Target by genre, curated title groups and audience segments.",
-  },
-];
+export { PLATFORMS } from "./platforms";
+import { PLATFORMS } from "./platforms";
 
 const AGE_TEXT: Record<string, string> = {
   "24_and_younger": "under 25",

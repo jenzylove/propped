@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import reference from "../../../data/reference.json";
-import { PLATFORMS } from "@/lib/plan";
+import { PLATFORMS } from "@/lib/platforms";
 
 export const metadata: Metadata = { title: "How it works · Propped" };
 

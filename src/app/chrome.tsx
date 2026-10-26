@@ -67,8 +67,8 @@ export function Footer() {
             <span className="kicker">Project</span>
             <a href={REPO} target="_blank" rel="noopener noreferrer">Source code</a>
             <a href={`${REPO}/blob/main/LICENSE`} target="_blank" rel="noopener noreferrer">MIT license</a>
-            <a href="https://www.universalads.com/" target="_blank" rel="noopener noreferrer">Universal Ads</a>
-            <a href="https://advertising.amazon.com/solutions/products/streaming-tv-ads" target="_blank" rel="noopener noreferrer">Amazon streaming TV ads</a>
+            <a href="https://www.universalads.com/article/advertise-on-tv-without-a-big-budget" target="_blank" rel="noopener noreferrer">Universal Ads</a>
+            <a href="https://advertising.amazon.com/blog/unboxed-2023-sponsored-tv" target="_blank" rel="noopener noreferrer">Amazon Sponsored TV</a>
           </nav>
         </div>
         <div className="foot-bar">

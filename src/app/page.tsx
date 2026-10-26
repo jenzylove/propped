@@ -40,7 +40,7 @@ const STEPS = [
   {
     t: "Reach the same viewers with ads",
     s: "From about $100",
-    d: "A self serve TV ad plan for the same genres, networks and audience, on Universal Ads or Amazon streaming TV ads.",
+    d: "A self serve TV ad plan for the same genres, networks and audience, on Universal Ads or Amazon Sponsored TV.",
   },
 ];
 
@@ -143,7 +143,7 @@ export default function Landing() {
         <div>
           <strong>95%</strong>
           <span>
-            of TV product placements involve no money.{" "}
+            of product placements in film and TV involve no money, says{" "}
             <a href={RANGEME} target="_blank" rel="noopener noreferrer">RangeMe</a>
           </span>
         </div>
@@ -153,7 +153,10 @@ export default function Landing() {
         </div>
         <div>
           <strong>$100</strong>
-          <span>to start a self serve TV campaign for the same viewers</span>
+          <span>
+            to start a self serve TV campaign for the same viewers.{" "}
+            <a href="https://www.universalads.com/article/advertise-on-tv-without-a-big-budget" target="_blank" rel="noopener noreferrer">Universal Ads</a>
+          </span>
         </div>
       </section>
 

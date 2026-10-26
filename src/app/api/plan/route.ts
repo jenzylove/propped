@@ -14,8 +14,8 @@ export async function POST(req: Request) {
   const now = Date.now();
   const recent = (runs.get(ip) ?? []).filter((t) => now - t < 3600_000);
   if (recent.length >= RUNS_PER_HOUR) return Response.json({ error: "That's the limit of new plans for this hour." }, { status: 429 });
-  const body = (await req.json().catch(() => null)) as { brand?: string } | null;
-  const brand = (body?.brand ?? "").trim().slice(0, 80);
+  const body = (await req.json().catch(() => null)) as { brand?: unknown } | null;
+  const brand = (typeof body?.brand === "string" ? body.brand : "").trim().slice(0, 80);
   if (brand.length < 2) return Response.json({ error: "Type a brand name." }, { status: 400 });
   recent.push(now);
   runs.set(ip, recent);

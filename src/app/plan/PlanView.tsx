@@ -2,6 +2,7 @@
 /* eslint-disable @next/next/no-img-element */
 import { useState } from "react";
 import { statusStyle } from "../shared";
+import { PLATFORMS } from "@/lib/platforms";
 
 export interface PlanPlacement {
   show: string;
@@ -101,7 +102,7 @@ export function PlacementDrops({ placements, ads }: { placements: PlanPlacement[
             <div className="kicker" style={{ marginTop: 14 }}>Networks</div>
             <div style={{ marginTop: 8 }}>{ads.networks.map((g) => <span key={g} className="chip">{g}</span>)}</div>
             <div className="kicker" style={{ marginTop: 22 }}>Where to buy</div>
-            {ads.platforms.map((pl) => (
+            {PLATFORMS.map((pl) => (
               <div key={pl.name} style={{ padding: "10px 0" }}>
                 <a href={pl.url} target="_blank" rel="noopener noreferrer" style={{ fontWeight: 700, fontSize: 18 }}>{pl.name}</a>
                 <p className="muted" style={{ margin: "4px 0 0" }}>{pl.how}</p>
