@@ -85,7 +85,7 @@ const TOOLS: ToolDef[] = [
     type: "function",
     function: {
       name: "choose_placements",
-      description: "Pick up to 4 shows to pitch for product placement, only from the placeable list (running or awaiting renewal, live action). For each, one sentence a founder would understand on why it fits: what about the show and its viewers matches the brand (genre, tone, audience fit, made for this brand). Never mention status or field names. Never list ages or gender; say it in words a person would use, like \"a crowd close to your customers\" when audience_fit is the same people.",
+      description: "Pick up to 4 shows to pitch for product placement, only from the placeable list (running or awaiting renewal, live action). For each, one sentence a founder would understand on why it fits: what about the show and its viewers matches the brand (genre, tone, audience fit, made for this brand). Never use field words like renewal pending, running, made for this brand or audience fit. Never list ages or gender; say it in words a person would use, like \"a crowd close to your customers\" when audience_fit is the same people.",
       parameters: {
         type: "object",
         properties: { picks: { type: "array", items: { type: "object", properties: { show: { type: "string" }, why: { type: "string" } }, required: ["show", "why"] } } },
