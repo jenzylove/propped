@@ -1,10 +1,12 @@
 import type { Metadata } from "next";
-import { Bricolage_Grotesque, IBM_Plex_Mono } from "next/font/google";
+import { Big_Shoulders, Big_Shoulders_Stencil, Courier_Prime, Schibsted_Grotesk } from "next/font/google";
 import "./globals.css";
 import { Header, Footer } from "./chrome";
 
-const bricolage = Bricolage_Grotesque({ subsets: ["latin"], variable: "--font-bricolage", weight: ["400", "500", "600", "700", "800"] });
-const plexMono = IBM_Plex_Mono({ subsets: ["latin"], variable: "--font-plex-mono", weight: ["400", "600"] });
+const shoulders = Big_Shoulders({ subsets: ["latin"], variable: "--font-shoulders", weight: ["700", "800", "900"] });
+const stencil = Big_Shoulders_Stencil({ subsets: ["latin"], variable: "--font-stencil", weight: ["800", "900"] });
+const schibsted = Schibsted_Grotesk({ subsets: ["latin"], variable: "--font-schibsted", weight: ["400", "500", "600", "700"] });
+const courier = Courier_Prime({ subsets: ["latin"], variable: "--font-courier", weight: ["400", "700"] });
 
 export const metadata: Metadata = {
   title: "Propped",
@@ -13,7 +15,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" data-theme="light" className={`${bricolage.variable} ${plexMono.variable}`}>
+    <html lang="en" data-theme="light" className={`${shoulders.variable} ${stencil.variable} ${schibsted.variable} ${courier.variable}`}>
       <body>
         <Header />
         {children}

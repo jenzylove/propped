@@ -3,6 +3,14 @@ import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { PlanView, ShareLink, type PlanData } from "./PlanView";
 
+const STEP_NAMES: Record<string, string> = {
+  read_taste: "Read your customers’ taste",
+  read_shows: "Checked which shows are still filming",
+  choose_placements: "Picked the shows to pitch",
+  plan_ads: "Planned the ads",
+  finish: "Wrote the pitch letters",
+};
+
 interface Step {
   tool: string;
   summary: string;
@@ -89,7 +97,7 @@ export default function PlanPage() {
       {brand && (
         <div style={{ marginTop: 28, display: "flex", gap: 12, alignItems: "center", flexWrap: "wrap" }}>
           <button className="btn" disabled={state === "running"} onClick={() => void run(brand)}>
-            {state === "running" ? "Working…" : "Run"}
+            {state === "running" ? "Building your plan…" : state === "done" ? "Build it again" : "Build my plan"}
           </button>
         </div>
       )}
@@ -100,8 +108,7 @@ export default function PlanPage() {
             <li key={i} className="pop" style={{ display: "flex", gap: 12, padding: "6px 0", alignItems: "baseline" }}>
               <span className="dot" style={{ flex: "none", transform: "translateY(-1px)" }} />
               <span style={{ minWidth: 0 }}>
-                <b className="mono" style={{ fontSize: 13 }}>{s.tool}</b> <span className="muted">{s.summary}</span>{" "}
-                <span className="faint mono" style={{ fontSize: 12 }}>{(s.ms / 1000).toFixed(1)}s</span>
+                <b>{STEP_NAMES[s.tool] ?? s.tool}.</b> <span className="muted">{s.summary}</span>
               </span>
             </li>
           ))}

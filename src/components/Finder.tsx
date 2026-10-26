@@ -164,7 +164,7 @@ export default function Finder({ embed = false, initial }: { embed?: boolean; in
               Ranked for your brand. Tap a show to see it.
             </p>
             <div className="wall" style={{ marginTop: 24 }}>
-              {shows.shows.map((s, i) => {
+              {(embed ? shows.shows.slice(0, 8) : shows.shows).map((s, i) => {
                 const st = statusStyle(s.info?.status);
                 const fit = fitLine(s.match?.label);
                 const inner = (

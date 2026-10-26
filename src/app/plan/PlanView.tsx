@@ -32,11 +32,10 @@ export interface PlanData {
 function CopyPitch({ text }: { text: string }) {
   const [done, setDone] = useState(false);
   return (
-    <div className="glass" style={{ padding: 16, marginTop: 10, boxShadow: "none" }}>
-      <pre style={{ whiteSpace: "pre-wrap", wordBreak: "break-word", margin: 0, fontFamily: "var(--sans)", fontSize: 15 }}>{text}</pre>
+    <>
+      <p className="letter">{text}</p>
       <button
-        className="btn ghost"
-        style={{ marginTop: 12, padding: "8px 16px", fontSize: 14 }}
+        className="copy"
         onClick={() => {
           void navigator.clipboard?.writeText(text).then(() => {
             setDone(true);
@@ -44,71 +43,85 @@ function CopyPitch({ text }: { text: string }) {
           });
         }}
       >
-        {done ? "Copied" : "Copy pitch"}
+        {done ? "Copied" : "Copy the letter"}
       </button>
+    </>
+  );
+}
+
+/** Each placement is one dropdown row; the first is open. */
+export function PlacementDrops({ placements, ads }: { placements: PlanPlacement[]; ads?: PlanData["ads"] }) {
+  return (
+    <div className="drops">
+      {placements.map((p, i) => {
+        const st = statusStyle(p.status);
+        return (
+          <details key={p.show} className="drop" open={i === 0}>
+            <summary>
+              <span className="drop-n">{String(i + 1).padStart(2, "0")}</span>
+              <span className="drop-thumb">
+                {p.poster && <img src={p.poster} alt="" />}
+                <span>
+                  <span className="drop-t">{p.show}</span>
+                  <span className="drop-s">
+                    {[p.network, st.label, p.company].filter(Boolean).join(" · ")}
+                  </span>
+                </span>
+              </span>
+            </summary>
+            <div className="drop-body">
+              <div className="kicker">Why it fits</div>
+              <p style={{ margin: "4px 0 14px" }}>{p.why}</p>
+              <div className="kicker">What to send</div>
+              <p style={{ margin: "4px 0 16px", fontWeight: 600 }}>{p.send}</p>
+              <div className="kicker">Pitch letter to the set decoration and props team</div>
+              <CopyPitch text={p.pitch} />
+            </div>
+          </details>
+        );
+      })}
+      {ads && (
+        <details className="drop">
+          <summary>
+            <span className="drop-n">{String(placements.length + 1).padStart(2, "0")}</span>
+            <span>
+              <span className="drop-t">Ad plan</span>
+              <span className="drop-s">The same viewers on self serve TV, from about $100</span>
+            </span>
+          </summary>
+          <div className="drop-body">
+            <p className="muted">{ads.note}</p>
+            <div className="kicker" style={{ marginTop: 18 }}>Audience</div>
+            <div style={{ marginTop: 8 }}>
+              {ads.audience.ages.map((a) => <span key={a} className="chip">{a}</span>)}
+              <span className="chip">{ads.audience.gender}</span>
+            </div>
+            <div className="kicker" style={{ marginTop: 14 }}>Genres</div>
+            <div style={{ marginTop: 8 }}>{ads.genres.map((g) => <span key={g} className="chip">{g}</span>)}</div>
+            <div className="kicker" style={{ marginTop: 14 }}>Networks</div>
+            <div style={{ marginTop: 8 }}>{ads.networks.map((g) => <span key={g} className="chip">{g}</span>)}</div>
+            <div className="kicker" style={{ marginTop: 22 }}>Where to buy</div>
+            {ads.platforms.map((pl) => (
+              <div key={pl.name} style={{ padding: "10px 0" }}>
+                <a href={pl.url} target="_blank" rel="noopener noreferrer" style={{ fontWeight: 700, fontSize: 18 }}>{pl.name}</a>
+                <p className="muted" style={{ margin: "4px 0 0" }}>{pl.how}</p>
+              </div>
+            ))}
+            <div className="kicker" style={{ marginTop: 14 }}>Based on these shows</div>
+            <div style={{ marginTop: 8 }}>{ads.shows.map((g) => <span key={g} className="chip">{g}</span>)}</div>
+          </div>
+        </details>
+      )}
     </div>
   );
 }
 
 export function PlanView({ plan }: { plan: PlanData }) {
   return (
-    <>
-      <section style={{ marginTop: 64 }}>
-        <h2 className="display" style={{ fontSize: "clamp(28px, 4vw, 44px)" }}>Placement pack</h2>
-        {plan.placements.map((p, i) => {
-          const st = statusStyle(p.status);
-          return (
-            <article key={i} className="placement" style={{ marginTop: 36 }}>
-              <div className="thumb">
-                {p.poster ? <img src={p.poster} alt={`${p.show} poster`} /> : <div className="glass noposter" style={{ fontSize: 14 }}>{p.show}</div>}
-              </div>
-              <div style={{ minWidth: 0 }}>
-                <h3 style={{ fontSize: 26, fontWeight: 700, margin: 0, lineHeight: 1.15 }}>{p.show}</h3>
-                <div style={{ margin: "8px 0 14px", display: "flex", gap: 8, flexWrap: "wrap", alignItems: "center" }}>
-                  {p.network && <span className="pill glass" style={{ padding: "4px 10px", fontSize: 13, boxShadow: "none" }}>{p.network}</span>}
-                  <span className="pill glass" style={{ padding: "4px 10px", fontSize: 13, color: st.color, boxShadow: "none" }}>
-                    <span className="dot" style={{ background: st.color, width: 7, height: 7 }} />
-                    {st.label}
-                  </span>
-                  {p.company && <span className="muted" style={{ fontSize: 14 }}>{p.company}</span>}
-                </div>
-                <div className="kicker">Why it fits</div>
-                <p style={{ margin: "4px 0 14px" }}>{p.why}</p>
-                <div className="kicker">What to send</div>
-                <p style={{ margin: "4px 0 0" }}>{p.send}</p>
-                <CopyPitch text={p.pitch} />
-              </div>
-            </article>
-          );
-        })}
-      </section>
-
-      <section style={{ marginTop: 72 }}>
-        <h2 className="display" style={{ fontSize: "clamp(28px, 4vw, 44px)" }}>Ad plan</h2>
-        <p className="muted" style={{ marginTop: 10, maxWidth: 720 }}>{plan.ads.note}</p>
-
-        <div className="kicker" style={{ marginTop: 24 }}>Audience</div>
-        <div style={{ marginTop: 8 }}>
-          {plan.ads.audience.ages.map((a) => <span key={a} className="chip">{a}</span>)}
-          <span className="chip">{plan.ads.audience.gender}</span>
-        </div>
-        <div className="kicker" style={{ marginTop: 16 }}>Genres</div>
-        <div style={{ marginTop: 8 }}>{plan.ads.genres.map((g) => <span key={g} className="chip">{g}</span>)}</div>
-        <div className="kicker" style={{ marginTop: 16 }}>Networks</div>
-        <div style={{ marginTop: 8 }}>{plan.ads.networks.map((g) => <span key={g} className="chip">{g}</span>)}</div>
-
-        <div className="kicker" style={{ marginTop: 28 }}>Where to buy</div>
-        {plan.ads.platforms.map((pl) => (
-          <div key={pl.name} style={{ padding: "12px 0" }}>
-            <a href={pl.url} target="_blank" rel="noopener noreferrer" style={{ fontWeight: 700, fontSize: 18 }}>{pl.name}</a>
-            <p className="muted" style={{ margin: "4px 0 0" }}>{pl.how}</p>
-          </div>
-        ))}
-
-        <div className="kicker" style={{ marginTop: 20 }}>Based on these shows</div>
-        <div style={{ marginTop: 8 }}>{plan.ads.shows.map((g) => <span key={g} className="chip">{g}</span>)}</div>
-      </section>
-    </>
+    <section style={{ marginTop: 56 }}>
+      <h2 className="display" style={{ fontSize: "clamp(32px, 4.6vw, 56px)" }}>Placement pack and ad plan</h2>
+      <PlacementDrops placements={plan.placements} ads={plan.ads} />
+    </section>
   );
 }
 
