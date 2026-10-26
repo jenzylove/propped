@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { head } from "@vercel/blob";
 import { PlanView, type PlanData } from "../PlanView";
@@ -24,15 +25,7 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
 
 export default async function SavedPlan({ params }: { params: Promise<{ id: string }> }) {
   const plan = await load((await params).id);
-  if (!plan) {
-    return (
-      <main className="wrap" style={{ paddingTop: 56 }}>
-        <h1 className="display" style={{ fontSize: "clamp(36px, 6vw, 68px)" }}>We can’t find that plan</h1>
-        <p className="muted" style={{ fontSize: 20, marginTop: 14 }}>The link may be wrong, or the plan was never saved.</p>
-        <Link href="/app" className="btn" style={{ marginTop: 24 }}>Try a brand</Link>
-      </main>
-    );
-  }
+  if (!plan) notFound();
   return (
     <main className="wrap" style={{ paddingTop: 56 }}>
       <Link href={`/app?brand=${encodeURIComponent(plan.brand)}`} className="muted" style={{ fontSize: 14 }}>See {plan.brand}’s shows</Link>

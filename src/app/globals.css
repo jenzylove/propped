@@ -201,10 +201,10 @@ a {
   line-height: 0.94;
 }
 .kicker {
-  font-family: var(--mono);
+  font-family: var(--sans);
   font-weight: 700;
-  font-size: 13px;
-  letter-spacing: 0.06em;
+  font-size: 12px;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--ink-3);
 }
@@ -453,7 +453,7 @@ select {
 .fan-card img { width: 100%; height: 100%; object-fit: cover; display: block; }
 .fan:hover .fan-card { transform: translateX(calc(var(--i) * 76px)) rotate(calc(var(--i) * 8deg)) translateY(calc(var(--i) * var(--i) * 10px - 8px)); }
 @keyframes fanIn { from { opacity: 0; transform: translateY(60px) rotate(0deg); } }
-.fan-note { position: absolute; left: 50%; bottom: 0; translate: -50% 0; width: min(330px, 94%); padding: 14px 16px 12px; z-index: 20; background: var(--card-solid); border-radius: 4px; box-shadow: var(--shadow); font-family: var(--mono); animation: popIn 500ms 700ms cubic-bezier(0.2, 0.8, 0.2, 1) both; }
+.fan-note { position: absolute; left: 50%; bottom: 0; translate: -50% 0; width: min(330px, 94%); padding: 14px 16px 12px; z-index: 20; background: var(--card-solid); border-radius: 4px; box-shadow: var(--shadow); animation: popIn 500ms 700ms cubic-bezier(0.2, 0.8, 0.2, 1) both; }
 .fan-note .tape { position: absolute; top: -14px; left: 14px; font-size: 11px; }
 .fan-row { display: flex; justify-content: space-between; gap: 12px; align-items: baseline; padding-top: 8px; font-size: 14px; border-bottom: 1px dashed var(--rule); padding-bottom: 6px; }
 .fan-row:last-child { border-bottom: 0; }
@@ -495,8 +495,8 @@ select {
 .drop-thumb img { width: 44px; aspect-ratio: 2 / 3; object-fit: cover; border-radius: 6px; box-shadow: var(--shadow); flex: none; }
 
 /* a pitch letter set like a script page */
-.letter { margin: 8px 0 0; font-family: var(--mono); font-size: 15px; line-height: 1.65; color: var(--ink); border-left: 3px solid var(--tape); padding: 2px 0 2px 18px; white-space: pre-wrap; word-break: break-word; }
-.copy { margin-top: 14px; font-family: var(--mono); font-weight: 700; font-size: 14px; background: none; border: 0; padding: 0; color: var(--green); cursor: pointer; text-decoration: underline; text-underline-offset: 4px; }
+.letter { margin: 10px 0 0; font-family: var(--sans); font-size: 16px; line-height: 1.7; color: var(--ink); background: #fffdf6; border-top: 6px solid var(--tape); padding: 20px 24px; box-shadow: 0 1px 2px rgba(20, 30, 15, 0.08), 0 8px 24px rgba(20, 30, 15, 0.06); white-space: pre-wrap; word-break: break-word; max-width: 720px; }
+.copy { margin-top: 14px; font-family: var(--sans); font-weight: 700; font-size: 15px; background: var(--green); color: #fff; border: 0; padding: 10px 18px; border-radius: 12px; cursor: pointer; }
 
 .common { margin-top: 30px; }
 .chip.struck { text-decoration: line-through; text-decoration-color: var(--orange); color: var(--ink-3); }
@@ -520,7 +520,7 @@ select {
 .foot-col { display: flex; flex-direction: column; gap: 10px; }
 .foot-col a { text-decoration: none; color: var(--ink-2); font-weight: 500; }
 .foot-col a:hover { color: var(--ink); text-decoration: underline; }
-.foot-bar { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; margin-top: 48px; padding-top: 18px; border-top: 1px solid var(--rule); color: var(--ink-3); font-size: 14px; font-family: var(--mono); }
+.foot-bar { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; margin-top: 48px; padding-top: 18px; border-top: 1px solid var(--rule); color: var(--ink-3); font-size: 14px; }
 .foot-word { font-family: var(--stencil); font-weight: 900; text-transform: uppercase; font-size: clamp(110px, 25vw, 360px); line-height: 0.78; margin: 30px 0 -0.08em; color: var(--bg-2); user-select: none; text-align: center; }
 
 .rv { opacity: 0; transform: translateY(28px); transition: opacity 700ms ease, transform 700ms cubic-bezier(0.2, 0.8, 0.2, 1); }

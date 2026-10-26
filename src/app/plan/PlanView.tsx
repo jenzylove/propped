@@ -128,25 +128,21 @@ export function PlanView({ plan }: { plan: PlanData }) {
 
 export function ShareLink({ id }: { id: string }) {
   const [done, setDone] = useState(false);
-  const path = `/plan/${id}`;
   return (
-    <section style={{ marginTop: 72 }}>
+    <section style={{ marginTop: 64 }}>
       <h2 className="display" style={{ fontSize: "clamp(28px, 4vw, 44px)" }}>Share this plan</h2>
-      <div style={{ marginTop: 14, display: "flex", gap: 12, alignItems: "center", flexWrap: "wrap" }}>
-        <a href={path} style={{ fontWeight: 600, wordBreak: "break-all" }}>{path}</a>
-        <button
-          className="btn ghost"
-          style={{ padding: "8px 16px", fontSize: 14 }}
-          onClick={() => {
-            void navigator.clipboard?.writeText(`${window.location.origin}${path}`).then(() => {
-              setDone(true);
-              setTimeout(() => setDone(false), 1800);
-            });
-          }}
-        >
-          {done ? "Copied" : "Copy link"}
-        </button>
-      </div>
+      <p className="muted" style={{ marginTop: 8 }}>Anyone with the link sees this plan, letters and all.</p>
+      <button
+        className="copy"
+        onClick={() => {
+          void navigator.clipboard?.writeText(`${window.location.origin}/plan/${id}`).then(() => {
+            setDone(true);
+            setTimeout(() => setDone(false), 1800);
+          });
+        }}
+      >
+        {done ? "Link copied" : "Copy link to this plan"}
+      </button>
     </section>
   );
 }

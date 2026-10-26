@@ -10,7 +10,7 @@ export async function GET(req: Request) {
   if (brand.length < 2) return NextResponse.json({ error: "Type a brand name." }, { status: 400 });
   try {
     const r = await brandShows(brand);
-    if (!r.brand) return NextResponse.json({ error: `"${brand}" isn't in Qloo's taste data yet. Try a brand your customers also buy.` }, { status: 404 });
+    if (!r.brand) return NextResponse.json({ error: `"${brand}" isn't in Qloo's taste data yet. Try a brand your customers also buy.`, brand: null, shows: [] });
     return NextResponse.json(r, { headers: { "Cache-Control": "public, s-maxage=3600" } });
   } catch (e) {
     const status = e instanceof QlooError && e.status >= 400 ? e.status : 502;

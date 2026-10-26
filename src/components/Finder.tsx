@@ -48,7 +48,7 @@ export default function Finder({ embed = false, initial }: { embed?: boolean; in
       const r = await fetch(`/api/shows?brand=${encodeURIComponent(q)}`);
       const j = await r.json().catch(() => ({}));
       if (my !== seq.current) return;
-      if (r.status === 404) {
+      if (r.ok && !j.brand) {
         setErr(j.error || "We couldn’t find that brand.");
         setState("notfound");
         return;
