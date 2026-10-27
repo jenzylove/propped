@@ -19,7 +19,8 @@ export interface ShowInfo {
   company: string | null;
 }
 
-const UA = "Propped/1.0 (public TV placement research)";
+// Wikimedia asks for a user agent with a way to reach the operator.
+const UA = "Propped/1.0 (https://github.com/jenzylove/propped; TV placement research)";
 const cache = new Map<string, ShowInfo | null>();
 
 interface TvmazeShow {
@@ -44,9 +45,11 @@ interface WikiResponse {
 
 async function getJson<T>(url: string): Promise<T | null> {
   // TVmaze allows about 20 calls per 10 seconds; back off and retry when it says slow down.
-  for (let attempt = 0; attempt < 4; attempt++) {
-    const res = await fetch(url, { headers: { "User-Agent": UA }, signal: AbortSignal.timeout(15000) });
-    if (res.status === 429) {
+  // Other hosts (Wikipedia) get one quick try: a missing company should never hold up a page.
+  const tvmaze = url.startsWith("https://api.tvmaze.com/");
+  for (let attempt = 0; attempt < (tvmaze ? 4 : 1); attempt++) {
+    const res = await fetch(url, { headers: { "User-Agent": UA }, signal: AbortSignal.timeout(tvmaze ? 15000 : 6000) });
+    if (res.status === 429 && tvmaze) {
       await new Promise((r) => setTimeout(r, 1500 * (attempt + 1)));
       continue;
     }

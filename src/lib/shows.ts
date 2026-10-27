@@ -3,7 +3,7 @@ import "server-only";
 import reference from "../../data/reference.json";
 import { affinities, demographics, findEntities, type Demographics, type QlooCall } from "./qloo";
 import { demoMatch, fitSentence, rankShows, type DemoMatch, type RankedShow } from "./core/rank";
-import { showInfo, type ShowInfo } from "./enrich";
+import { tvInfo, type ShowInfo } from "./enrich";
 
 export const METHOD_VERSION = "1.0";
 const TOP = 12;
@@ -85,7 +85,9 @@ export async function brandShows(query: string, opts: { keepRanked?: boolean } =
   const all = rankShows(raw, ref.showBrandCounts, ref.brands.length);
   const ranked = all.slice(0, TOP);
   const shows = await pool(ranked, 4, async (s) => {
-    const [info, demo] = await Promise.all([showInfo(s.name), demographics(s.id, calls).catch(() => null)]);
+    // The poster wall needs TVmaze facts only; the production company is looked up later, for the sets a plan picks.
+    const [tv, demo] = await Promise.all([tvInfo(s.name), demographics(s.id, calls).catch(() => null)]);
+    const info: ShowInfo | null = tv ? { ...tv, company: null } : null;
     const match = brandDemo && demo ? demoMatch(brandDemo, demo) : null;
     return { ...s, info, match, fit: match ? fitSentence(match) : null };
   });
