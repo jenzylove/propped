@@ -29,15 +29,18 @@ async function fetchRetry(url: string, init: RequestInit) {
   }
 }
 
+// LLM_API_KEY is the name to use; the older name still works for existing deployments.
+const apiKey = () => process.env.LLM_API_KEY ?? process.env.QWEN_API_KEY;
+
 export function llmConfigured() {
-  return Boolean(process.env.QWEN_API_KEY && process.env.LLM_BASE_URL);
+  return Boolean(apiKey() && process.env.LLM_BASE_URL);
 }
 
 export async function chat(messages: ChatMessage[], opts: { tools?: ToolDef[]; maxTokens?: number; json?: boolean; think?: boolean } = {}) {
   if (!llmConfigured()) throw new LlmUnavailable("The language model isn't configured");
   const res = await fetchRetry(`${process.env.LLM_BASE_URL}/chat/completions`, {
     method: "POST",
-    headers: { Authorization: `Bearer ${process.env.QWEN_API_KEY}`, "Content-Type": "application/json" },
+    headers: { Authorization: `Bearer ${apiKey()}`, "Content-Type": "application/json" },
     body: JSON.stringify({
       model: process.env.LLM_MODEL ?? "qwen3.8-max",
       messages,

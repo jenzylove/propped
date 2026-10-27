@@ -5,7 +5,7 @@
 | Thing | Where it lives | Who can see it |
 |---|---|---|
 | Qloo API key | Server environment only (`QLOO_API_KEY`) | Never sent to the browser. Every Qloo call runs in server only modules (`src/lib/qloo.ts`, `src/lib/shows.ts`, `src/lib/plan.ts`). |
-| Language model key | Server environment only (`QWEN_API_KEY`, `LLM_BASE_URL`) | Never sent to the browser. |
+| Language model key | Server environment only (`LLM_API_KEY`, `LLM_BASE_URL`) | Never sent to the browser. |
 | Blob storage token | Vercel environment only | Never in the repo. |
 | Plans and pitch boards | Vercel Blob, public files under `plans/` and `boards/` | Anyone with a plan's link. Plans hold a brand name, public show facts and letters, never personal data. |
 

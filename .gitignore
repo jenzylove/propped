@@ -15,3 +15,10 @@ coverage/
 
 .vercel
 .env*
+
+# build artifacts
+*.tsbuildinfo
+next-env.d.ts
+
+# keep the env template
+!.env.example
