@@ -1,17 +1,17 @@
 {
- "id": "parachute-v4xnq",
+ "id": "parachute-wivba",
  "brand": "Parachute",
- "summary": "Pitch Grand Designs and Your Home Made Perfect first as they rank highest for the brand. Ads should target DIY genre on Channel 4 and HGTV to reach ages under 25, 30 to 34, 35 to 44, leans female.",
+ "summary": "Pitch Grand Designs and Home Town first as they have the strongest alignment with home focused viewers. Ads should target DIY genre across Channel 4, HGTV, and Netflix to reach ages under 25, 30 to 34, 35 to 44, leans female.",
  "placements": [
   {
    "show": "Grand Designs",
    "network": "Channel 4",
    "status": "running",
-   "company": null,
+   "company": "Talkback, Talkback Thames, Boundless",
    "poster": "https://static.tvmaze.com/uploads/images/medium_portrait/591/1478756.jpg",
    "why": "A documentary about building dream homes that attracts viewers who care deeply about design and quality living spaces just like your customers",
    "send": "Parachute bedding set, one queen size",
-   "pitch": "Dear set decoration team,\n\nGrand Designs showcases exceptional home design and we believe Parachute bedding would fit naturally in scenes featuring completed bedroom renovations or staging moments. Our premium linens could appear on a master bed during a final reveal or in a quiet moment where homeowners appreciate their new space. The product is free with no paid placement required and we can ship within a week. We admire how the show celebrates thoughtful design that transforms houses into homes. Thank you for considering this collaboration. Best regards, Parachute",
+   "pitch": "Dear set decoration team,\n\nGrand Designs showcases thoughtful home creation where Parachute bedding would fit naturally on a newly finished bedroom bed or draped over a sofa in a reveal scene. The product is free with no paid placement required and we can ship within a week. Your audience values quality design and intentional living spaces which aligns with our brand. We would be honored to support your storytelling with authentic home textiles that enhance the emotional impact of each build. Please let us know if this fits your upcoming episodes. Warmly, Parachute",
    "chance": {
     "tier": "likely",
     "label": "Likely yes",
@@ -19,55 +19,14 @@
    },
    "recipient": {
     "greeting": "Dear set decoration team",
-    "line": "The set decoration team, care of the Grand Designs production team at Channel 4",
+    "line": "The set decoration team, care of the Talkback production office",
     "person": null,
     "role": null,
-    "company": null
-   }
-  },
-  {
-   "show": "Your Home Made Perfect",
-   "network": "BBC Two",
-   "status": "renewal pending",
-   "company": null,
-   "poster": "https://static.tvmaze.com/uploads/images/medium_portrait/191/479916.jpg",
-   "why": "A reality show focused on transforming homes with innovative design solutions that speaks directly to people passionate about creating beautiful personal spaces",
-   "send": "Parachute throw blanket and pillow set, two sets",
-   "pitch": "Dear set decoration team,\n\nYour Home Made Perfect highlights innovative home transformations where Parachute textiles would complement modern living spaces beautifully. Our throw blankets and pillows could rest on a newly designed sofa or accent chair during room reveal segments. The product is free with no paid placement required and we can ship within a week. The show captures the joy of creating personalized spaces that reflect individual style which aligns with our brand values. We would love to support your set design needs. Best regards, Parachute",
-   "chance": {
-    "tier": "likely",
-    "label": "Likely yes",
-    "why": "Unscripted shows dress real homes, kitchens and kit, and often take free product from brands."
+    "company": "Talkback"
    },
-   "recipient": {
-    "greeting": "Dear set decoration team",
-    "line": "The set decoration team, care of the Your Home Made Perfect production team at BBC Two",
-    "person": null,
-    "role": null,
-    "company": null
-   }
-  },
-  {
-   "show": "The Repair Shop",
-   "network": "BBC One",
-   "status": "running",
-   "company": null,
-   "poster": "https://static.tvmaze.com/uploads/images/medium_portrait/610/1526147.jpg",
-   "why": "A heartwarming reality series about restoring cherished items that draws a crowd close to your customers who value craftsmanship and thoughtful design",
-   "send": "Parachute linen cushion covers, four pieces",
-   "pitch": "Dear set decoration team,\n\nThe Repair Shop celebrates craftsmanship and restoration where Parachute linen cushion covers would add warmth to workshop or home scenes. Our natural textiles could appear on a restored armchair or bench seating during project completions. The product is free with no paid placement required and we can ship within a week. The show honors the beauty of handmade items and thoughtful restoration which resonates with our commitment to quality materials. We hope to contribute to your authentic set dressing. Best regards, Parachute",
-   "chance": {
-    "tier": "likely",
-    "label": "Likely yes",
-    "why": "Unscripted shows dress real homes, kitchens and kit, and often take free product from brands."
-   },
-   "recipient": {
-    "greeting": "Dear set decoration team",
-    "line": "The set decoration team, care of the The Repair Shop production team at BBC One",
-    "person": null,
-    "role": null,
-    "company": null
-   }
+   "site": null,
+   "declined": true,
+   "replacedBy": "Dream Home Makeover"
   },
   {
    "show": "Home Town",
@@ -75,9 +34,9 @@
    "status": "running",
    "company": "RTR Media Inc",
    "poster": "https://static.tvmaze.com/uploads/images/medium_portrait/549/1373674.jpg",
-   "why": "A DIY reality show about revitalizing homes and communities that resonates with viewers who love making their spaces feel warm and welcoming",
-   "send": "Parachute duvet cover set, one king size",
-   "pitch": "Dear set decoration team,\n\nHome Town showcases heartwarming home revitalizations where Parachute bedding would enhance bedroom transformation scenes. Our duvet covers could feature prominently during final reveals or in quiet moments showing families enjoying their renewed spaces. The product is free with no paid placement required and we can ship within a week. The show embodies community spirit and creating welcoming homes which matches our brand philosophy perfectly. We would be honored to support your production. Best regards, Parachute",
+   "why": "A reality show focused on renovating houses with warmth and style that appeals to people who value cozy and thoughtful home environments similar to your audience",
+   "send": "Parachute throw blanket and pillow set, one each",
+   "pitch": "Dear set decoration team,\n\nHome Town celebrates cozy renovations where Parachute textiles would belong on a restored porch swing or styled across a living room armchair during a final walkthrough. The product is free with no paid placement required and we can ship within a week. Your show\u2019s warmth and focus on livable beauty mirrors what our customers seek in their own homes. We\u2019d love to contribute softness and texture that feel genuine to the families you feature. Happy to send samples for your consideration. Warmly, Parachute",
    "chance": {
     "tier": "likely",
     "label": "Likely yes",
@@ -89,7 +48,292 @@
     "person": null,
     "role": null,
     "company": "RTR Media Inc"
+   },
+   "site": null,
+   "followUp": "Dear set decoration team,\n\nI am following up on my note from last week. We would love to send free Parachute textiles for your upcoming episodes, with no strings attached. Our linens and throws are ready to add warmth to the beautiful homes you create.\n\nIf this sounds helpful, just reply with a shipping address and we will get everything sent out right away.\n\nWarmly,\nParachute"
+  },
+  {
+   "show": "Say I Do",
+   "network": "Netflix",
+   "status": "running",
+   "company": "Scout Productions",
+   "poster": "https://static.tvmaze.com/uploads/images/medium_portrait/263/659206.jpg",
+   "why": "A romance reality series centered on weddings and new beginnings that resonates with viewers planning their first shared homes much like your customer base",
+   "send": "Parachute duvet cover set, one king size",
+   "pitch": "Dear set decoration team,\n\nSay I Do captures new beginnings where Parachute bedding could rest elegantly on a couple\u2019s first shared bed or be folded neatly in a honeymoon suite reveal. The product is free with no paid placement required and we can ship within a week. Your celebration of love and fresh starts resonates with viewers building lives together just like our customers. We\u2019d be glad to provide linens that honor those intimate moments without disrupting your narrative flow. Let us know if this works for you. Warmly, Parachute",
+   "chance": {
+    "tier": "likely",
+    "label": "Likely yes",
+    "why": "Unscripted shows dress real homes, kitchens and kit, and often take free product from brands."
+   },
+   "recipient": {
+    "greeting": "Dear set decoration team",
+    "line": "The set decoration team, care of the Scout Productions production office",
+    "person": null,
+    "role": null,
+    "company": "Scout Productions"
+   },
+   "site": null,
+   "replyNote": "Thank you so much for your interest. We are thrilled to support the beautiful work you do on Say I Do. We will send one king size Parachute duvet cover set at no cost. Please share your shipping address and a contact name so we can get this to you right away. If your production requires any clearance or release forms, just let us know and we will handle them promptly. We promise to ship everything within a week of receiving your details. Warmly, Parachute"
+  },
+  {
+   "show": "Hollywood Houselift with Jeff Lewis",
+   "network": "Amazon Freevee",
+   "status": "renewal pending",
+   "company": "Fly on the Wall Entertainment",
+   "poster": "https://static.tvmaze.com/uploads/images/medium_portrait/483/1208374.jpg",
+   "why": "A design focused reality show featuring high end renovations that draws an audience passionate about elevated home aesthetics matching your brand's appeal",
+   "send": "Parachute linen curtain panel pair, one set",
+   "pitch": "Dear set decoration team,\n\nHollywood Houselift with Jeff Lewis highlights refined transformations where Parachute curtains could frame a sunlit window or soften a modern living area during a design reveal. The product is free with no paid placement required and we can ship within a week. Your elevated aesthetic and attention to detail match what our customers aspire to in their own spaces. We\u2019d welcome the chance to add subtle texture that complements your high end vision without overshadowing your work. Please consider us for future scenes. Warmly, Parachute",
+   "chance": {
+    "tier": "likely",
+    "label": "Likely yes",
+    "why": "Unscripted shows dress real homes, kitchens and kit, and often take free product from brands."
+   },
+   "recipient": {
+    "greeting": "Dear set decoration team",
+    "line": "The set decoration team, care of the Fly on the Wall Entertainment production office",
+    "person": null,
+    "role": null,
+    "company": "Fly on the Wall Entertainment"
+   },
+   "site": null,
+   "watch": "Hollywood Houselift with Jeff Lewis has no air date listed yet. Product that goes to set usually shows up in episodes filmed after it arrives. Ask the props team which episodes it is likely to appear in, and ask before sharing any stills."
+  },
+  {
+   "show": "Dream Home Makeover",
+   "network": "Netflix",
+   "status": "renewal pending",
+   "company": null,
+   "poster": "https://static.tvmaze.com/uploads/images/medium_portrait/275/687963.jpg",
+   "why": "The show transforms entire houses including bedrooms and living spaces for families, so soft bedding fits naturally into the warm reveals your viewers love.",
+   "send": "Two Parachute queen bedding sets",
+   "pitch": "Dear set decoration team,\n\nI am writing from Parachute to offer our bedding for your upcoming home transformations. We know you create beautiful spaces for families, and we would love to help.\n\nOur soft sheets and duvets could look wonderful on a primary bed during a big reveal or folded neatly in a guest room to add warmth to the space. The natural textures match the inviting homes you build each episode.\n\nWe are happy to send two queen bedding sets completely free with no paid placement required. If this sounds helpful, we can ship them within a week to your studio.\n\nThank you for your time and for the joy you bring to every home.\n\nWarmly,\nThe Parachute Team",
+   "chance": {
+    "tier": "likely",
+    "label": "Likely yes",
+    "why": "Unscripted shows dress real homes, kitchens and kit, and often take free product from brands."
+   },
+   "recipient": {
+    "greeting": "Dear set decoration team",
+    "line": "The set decoration team, care of the Dream Home Makeover production team at Netflix",
+    "person": null,
+    "role": null,
+    "company": null
+   },
+   "site": null,
+   "replaces": "Grand Designs",
+   "onScreen": "Parachute is on screen in Dream Home Makeover. Now launch Step 1, the TV campaign, to the same viewers while the moment is fresh, and ask the production before posting stills on your channels."
+  }
+ ],
+ "audience": {
+  "ages": [
+   "under 25",
+   "30 to 34",
+   "35 to 44"
+  ],
+  "gender": "leans female"
+ },
+ "candidates": [
+  {
+   "name": "Grand Designs",
+   "rank": 1,
+   "network": "Channel 4",
+   "kind": "Documentary",
+   "poster": "https://static.tvmaze.com/uploads/images/medium_portrait/591/1478756.jpg",
+   "status": "running",
+   "tvmazeId": 3251,
+   "nextEpisode": null,
+   "genres": [],
+   "chance": {
+    "tier": "likely",
+    "label": "Likely yes",
+    "why": "Unscripted shows dress real homes, kitchens and kit, and often take free product from brands."
    }
+  },
+  {
+   "name": "Dragons' Den",
+   "rank": 9,
+   "network": "CBC",
+   "kind": "Reality",
+   "poster": "https://static.tvmaze.com/uploads/images/medium_portrait/645/1613639.jpg",
+   "status": "running",
+   "tvmazeId": 4794,
+   "nextEpisode": "2026-10-29",
+   "genres": [],
+   "chance": {
+    "tier": "likely",
+    "label": "Likely yes",
+    "why": "Unscripted shows dress real homes, kitchens and kit, and often take free product from brands."
+   }
+  },
+  {
+   "name": "Home Town",
+   "rank": 10,
+   "network": "HGTV",
+   "kind": "Reality",
+   "poster": "https://static.tvmaze.com/uploads/images/medium_portrait/549/1373674.jpg",
+   "status": "running",
+   "tvmazeId": 12135,
+   "nextEpisode": null,
+   "genres": [
+    "DIY"
+   ],
+   "chance": {
+    "tier": "likely",
+    "label": "Likely yes",
+    "why": "Unscripted shows dress real homes, kitchens and kit, and often take free product from brands."
+   }
+  },
+  {
+   "name": "Love It or List It",
+   "rank": 16,
+   "network": "HGTV",
+   "kind": "Reality",
+   "poster": "https://static.tvmaze.com/uploads/images/medium_portrait/564/1412075.jpg",
+   "status": "running",
+   "tvmazeId": 4857,
+   "nextEpisode": null,
+   "genres": [],
+   "chance": {
+    "tier": "likely",
+    "label": "Likely yes",
+    "why": "Unscripted shows dress real homes, kitchens and kit, and often take free product from brands."
+   }
+  },
+  {
+   "name": "The Great Pottery Throw Down",
+   "rank": 19,
+   "network": "Channel 4",
+   "kind": "Reality",
+   "poster": "https://static.tvmaze.com/uploads/images/medium_portrait/607/1517571.jpg",
+   "status": "running",
+   "tvmazeId": 7520,
+   "nextEpisode": null,
+   "genres": [],
+   "chance": {
+    "tier": "likely",
+    "label": "Likely yes",
+    "why": "Unscripted shows dress real homes, kitchens and kit, and often take free product from brands."
+   }
+  },
+  {
+   "name": "Say I Do",
+   "rank": 20,
+   "network": "Netflix",
+   "kind": "Reality",
+   "poster": "https://static.tvmaze.com/uploads/images/medium_portrait/263/659206.jpg",
+   "status": "running",
+   "tvmazeId": 48864,
+   "nextEpisode": null,
+   "genres": [
+    "Romance"
+   ],
+   "chance": {
+    "tier": "likely",
+    "label": "Likely yes",
+    "why": "Unscripted shows dress real homes, kitchens and kit, and often take free product from brands."
+   }
+  },
+  {
+   "name": "Hollywood Houselift with Jeff Lewis",
+   "rank": 21,
+   "network": "Amazon Freevee",
+   "kind": "Reality",
+   "poster": "https://static.tvmaze.com/uploads/images/medium_portrait/483/1208374.jpg",
+   "status": "renewal pending",
+   "tvmazeId": 61874,
+   "nextEpisode": null,
+   "genres": [
+    "DIY"
+   ],
+   "chance": {
+    "tier": "likely",
+    "label": "Likely yes",
+    "why": "Unscripted shows dress real homes, kitchens and kit, and often take free product from brands."
+   }
+  },
+  {
+   "name": "Dream Home Makeover",
+   "rank": 28,
+   "network": "Netflix",
+   "kind": "Reality",
+   "poster": "https://static.tvmaze.com/uploads/images/medium_portrait/275/687963.jpg",
+   "status": "renewal pending",
+   "tvmazeId": 50617,
+   "nextEpisode": null,
+   "genres": [],
+   "chance": {
+    "tier": "likely",
+    "label": "Likely yes",
+    "why": "Unscripted shows dress real homes, kitchens and kit, and often take free product from brands."
+   }
+  },
+  {
+   "name": "Instant Dream Home",
+   "rank": 32,
+   "network": "Netflix",
+   "kind": "Reality",
+   "poster": "https://static.tvmaze.com/uploads/images/medium_portrait/417/1043163.jpg",
+   "status": "renewal pending",
+   "tvmazeId": 62872,
+   "nextEpisode": null,
+   "genres": [
+    "DIY"
+   ],
+   "chance": {
+    "tier": "likely",
+    "label": "Likely yes",
+    "why": "Unscripted shows dress real homes, kitchens and kit, and often take free product from brands."
+   }
+  },
+  {
+   "name": "Dogs",
+   "rank": 35,
+   "network": "Netflix",
+   "kind": "Documentary",
+   "poster": "https://static.tvmaze.com/uploads/images/medium_portrait/173/433043.jpg",
+   "status": "renewal pending",
+   "tvmazeId": 39407,
+   "nextEpisode": null,
+   "genres": [],
+   "chance": {
+    "tier": "likely",
+    "label": "Likely yes",
+    "why": "Unscripted shows dress real homes, kitchens and kit, and often take free product from brands."
+   }
+  }
+ ],
+ "moves": [
+  {
+   "at": "2026-10-26T23:42:33.187Z",
+   "show": "Grand Designs",
+   "kind": "swap",
+   "summary": "Grand Designs said no. Swapped in Dream Home Makeover, the next best set still filming, with a new letter."
+  },
+  {
+   "at": "2026-10-26T23:42:33.187Z",
+   "show": "Home Town",
+   "kind": "follow_up",
+   "summary": "No reply from Home Town. Wrote a short follow up."
+  },
+  {
+   "at": "2026-10-26T23:42:33.187Z",
+   "show": "Say I Do",
+   "kind": "reply",
+   "summary": "Say I Do replied. Wrote the answer that confirms shipping and asks for their forms."
+  },
+  {
+   "at": "2026-10-26T23:42:33.187Z",
+   "show": "Hollywood Houselift with Jeff Lewis",
+   "kind": "watch",
+   "summary": "Shipped to Hollywood Houselift with Jeff Lewis. No air date listed yet, so the agent set a watch plan."
+  },
+  {
+   "at": "2026-10-26T23:43:10.112Z",
+   "show": "Dream Home Makeover",
+   "kind": "on_screen",
+   "summary": "On screen in Dream Home Makeover. The TV campaign is the next move."
   }
  ],
  "ads": {
@@ -110,7 +354,8 @@
   ],
   "networks": [
    "Channel 4",
-   "HGTV"
+   "HGTV",
+   "Netflix"
   ],
   "audience": {
    "ages": [
@@ -133,7 +378,7 @@
    "Open Universal Ads and start a new campaign. It is self serve, from as little as $100.",
    "Audience: people aged under 25, 30 to 34, 35 to 44, leaning female.",
    "What they watch: DIY programming.",
-   "Networks to favor where offered: Channel 4, HGTV.",
+   "Networks to favor where offered: Channel 4, HGTV, Netflix.",
    "Location: only where you ship.",
    "Budget: start with $100 over one week, then keep what works."
   ]
@@ -142,17 +387,17 @@
   {
    "tool": "read_taste",
    "summary": "Read 50 shows Parachute customers over-index on",
-   "ms": 33567
+   "ms": 47509
   },
   {
    "tool": "read_shows",
-   "summary": "24 of 50 are still filming; 10 of the best are likely to take free product",
-   "ms": 1960
+   "summary": "17 of 50 are still filming; 10 of the best are likely to take free product",
+   "ms": 2165
   },
   {
    "tool": "choose_placements",
-   "summary": "Picked Grand Designs, Your Home Made Perfect, The Repair Shop, Home Town",
-   "ms": 15103
+   "summary": "Picked Grand Designs, Home Town, Say I Do, Hollywood Houselift with Jeff Lewis",
+   "ms": 470
   },
   {
    "tool": "plan_ads",
@@ -165,7 +410,7 @@
    "ms": 0
   }
  ],
- "qlooCalls": 17,
+ "qlooCalls": 19,
  "model": "qwen3.8-max",
- "createdAt": "2026-10-26T23:03:35.270Z"
+ "createdAt": "2026-10-26T23:42:25.031Z"
 }

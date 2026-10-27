@@ -220,11 +220,21 @@ export default function Landing() {
         <h2 className="display chap-h">
           On TV this week. <em>On set next.</em>
         </h2>
-        <p className="lede">A real plan the agent wrote for {plan.brand}, a bedding brand.</p>
+        <p className="lede">A real plan the agent wrote for {plan.brand}, a bedding brand, and what it did next as the shows answered.</p>
         <h3 className="display" style={{ fontSize: 30, marginTop: 34 }}>The TV campaign</h3>
         <AdSetup ads={plan.ads} />
         <h3 className="display" style={{ fontSize: 30, marginTop: 44 }}>The sets to pitch</h3>
         <PlacementDrops placements={plan.placements} brand={plan.brand} />
+        {plan.moves && plan.moves.length > 0 && (
+          <>
+            <h3 className="display" style={{ fontSize: 30, marginTop: 44 }}>What the agent did next</h3>
+            <ol className="steps-list">
+              {plan.moves.map((m, i) => (
+                <li key={i}>{m.summary}</li>
+              ))}
+            </ol>
+          </>
+        )}
         <Link className="textlink" href={SAMPLE}>
           Open the full {plan.brand} plan ↗
         </Link>
