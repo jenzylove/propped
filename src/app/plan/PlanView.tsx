@@ -179,7 +179,7 @@ export function PlanView({ plan: initial, board = true }: { plan: PlanData; boar
   return (
     <>
       <section style={{ marginTop: 56 }}>
-        <p className="tape">Step 1 · Guaranteed</p>
+        <p className="tape">Step 1 · Paid, from $100</p>
         <h2 className="display" style={{ fontSize: "clamp(32px, 4.6vw, 56px)", marginTop: 16 }}>On TV this week</h2>
         <p className="muted" style={{ maxWidth: 720, marginTop: 10 }}>
           Put {plan.brand} in front of the same viewers with a self serve TV campaign. These are the choices to make in Universal Ads.
