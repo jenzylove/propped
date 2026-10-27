@@ -119,7 +119,7 @@ cd propped
 npm install
 cp .env.example .env   # add your Qloo key and a language model endpoint
 npm run dev            # http://localhost:3000
-npm test               # 48 tests
+npm test               # 49 tests
 ```
 
 Saved plans and pitch boards need a Vercel Blob token (`BLOB_READ_WRITE_TOKEN`).
