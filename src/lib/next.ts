@@ -65,6 +65,7 @@ Return JSON with:
         send: String(out.send ?? p.send).slice(0, 200),
         pitch: addressed(String(out.pitch ?? ""), contact.recipient.greeting),
         chance: next.chance,
+        fit: next.fit,
         recipient: contact.recipient,
         site: contact.site,
         replaces: p.show,

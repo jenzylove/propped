@@ -16,11 +16,15 @@ export default function PitchBoard({
   planId,
   shows,
   onNext,
+  locked = false,
 }: {
   planId: string;
   shows: string[];
   onNext?: (r: NextResult) => void;
+  /** The shared sample: shown, but changes happen on a private copy. */
+  locked?: boolean;
 }) {
+  const [copying, setCopying] = useState(false);
   const [board, setBoard] = useState<Board>({});
   const [errors, setErrors] = useState<Record<string, boolean>>({});
   const [running, setRunning] = useState(false);
@@ -43,7 +47,22 @@ export default function PitchBoard({
 
   const stageOf = (show: string): Stage => board[show] ?? "not_sent";
 
+  async function copy() {
+    setCopying(true);
+    setFailed("");
+    try {
+      const res = await fetch(`/api/plan/${planId}/copy`, { method: "POST" });
+      const j = await res.json().catch(() => ({}));
+      if (!res.ok || !j.id) throw new Error(j.error || "Couldn't make a copy right now. Try again.");
+      window.location.href = `/plan/${j.id}`;
+    } catch (e) {
+      setFailed((e as Error).message);
+      setCopying(false);
+    }
+  }
+
   async function choose(show: string, stage: Stage) {
+    if (locked) return;
     const prev = stageOf(show);
     if (prev === stage) return;
     const n = (seq.current[show] ?? 0) + 1;
@@ -115,6 +134,7 @@ export default function PitchBoard({
                       key={s}
                       type="button"
                       aria-pressed={on}
+                      disabled={locked}
                       onClick={() => choose(show, s)}
                       style={{
                         font: "inherit",
@@ -124,7 +144,7 @@ export default function PitchBoard({
                         border: `1px solid ${on ? color : "var(--rule)"}`,
                         background: on ? color : "transparent",
                         color: on ? "#fff" : "inherit",
-                        cursor: "pointer",
+                        cursor: locked ? "default" : "pointer",
                       }}
                     >
                       {STAGE_LABELS[s]}
@@ -142,11 +162,19 @@ export default function PitchBoard({
         })}
       </div>
       <div style={{ marginTop: 22 }}>
-        <button className="copy" onClick={() => void next()} disabled={running} style={{ marginTop: 0, fontSize: 17, padding: "13px 22px" }}>
-          {running ? "The agent is working…" : "Take the next move"}
-        </button>
+        {locked ? (
+          <button className="copy" onClick={() => void copy()} disabled={copying} style={{ marginTop: 0, fontSize: 17, padding: "13px 22px" }}>
+            {copying ? "Making your copy…" : "Try it on your own copy"}
+          </button>
+        ) : (
+          <button className="copy" onClick={() => void next()} disabled={running} style={{ marginTop: 0, fontSize: 17, padding: "13px 22px" }}>
+            {running ? "The agent is working…" : "Take the next move"}
+          </button>
+        )}
         <p className="muted" style={{ fontSize: 15, marginTop: 10, maxWidth: 680 }}>
-          {waiting
+          {locked
+            ? "This is the shared sample, so it stays as it is for everyone. Make your own copy, mark what happened, and take the next move yourself."
+            : waiting
             ? "Mark what happened above, then let the agent act: a no gets the next best set, silence gets a follow up, a reply gets an answer, shipped product gets a watch plan."
             : "Mark each show as you hear back. A no, silence, a reply or a shipment gives the agent its next move."}
         </p>

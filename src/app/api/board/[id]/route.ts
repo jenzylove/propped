@@ -1,3 +1,4 @@
+import { isSample } from "@/lib/samples";
 import { PLAN_ID_RE, cleanBoard, parseUpdate, type Board } from "@/lib/board";
 import { readBoard, readPlan, saveBoard } from "@/lib/store";
 
@@ -16,6 +17,7 @@ export async function GET(_req: Request, ctx: { params: Promise<{ id: string }> 
 export async function PUT(req: Request, ctx: { params: Promise<{ id: string }> }) {
   const { id } = await ctx.params;
   if (!PLAN_ID_RE.test(id)) return Response.json({ error: "Not found" }, { status: 404 });
+  if (isSample(id)) return Response.json({ error: "This is the shared sample. Make your own copy to try it." }, { status: 403 });
 
   let body: unknown;
   try {

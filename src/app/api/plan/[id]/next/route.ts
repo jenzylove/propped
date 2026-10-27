@@ -1,3 +1,4 @@
+import { isSample } from "@/lib/samples";
 import { nextMoves } from "@/lib/next";
 import { cleanBoard, PLAN_ID_RE, type Board } from "@/lib/board";
 import { LlmUnavailable, llmConfigured } from "@/lib/llm";
@@ -14,6 +15,7 @@ const runs = new Map<string, number[]>();
 export async function POST(req: Request, ctx: { params: Promise<{ id: string }> }) {
   const { id } = await ctx.params;
   if (!PLAN_ID_RE.test(id)) return Response.json({ error: "Not found" }, { status: 404 });
+  if (isSample(id)) return Response.json({ error: "This is the shared sample. Make your own copy to try it." }, { status: 403 });
   if (!llmConfigured()) return Response.json({ error: "The planning model isn't configured." }, { status: 503 });
   const ip = req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ?? "local";
   const now = Date.now();

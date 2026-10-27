@@ -5,7 +5,7 @@ import { chat, type ChatMessage, type ToolDef } from "./llm";
 import { brandShows, pool, type BrandShows } from "./shows";
 import { AGE_KEYS, type DemoMatch } from "./core/rank";
 import { companyOf, setCrew, tvInfo, type ShowInfo } from "./enrich";
-import { allowsPlacement, chanceOf, recipientOf, TIER_ORDER, type Chance, type Recipient } from "./placement";
+import { allowsPlacement, chanceOf, filmingNow, fitScore, recipientOf, TIER_ORDER, type Chance, type Recipient } from "./placement";
 import { companySite } from "./company";
 
 export interface Placement {
@@ -18,6 +18,7 @@ export interface Placement {
   send: string;
   pitch: string;
   chance?: Chance;
+  fit?: number;
   recipient?: Recipient;
   /** The production company's own website, when Wikidata knows it. */
   site?: string | null;
@@ -43,6 +44,7 @@ export interface SavedCandidate {
   nextEpisode: string | null;
   genres?: string[];
   chance: Chance;
+  fit?: number;
 }
 
 export interface Move {
@@ -108,7 +110,8 @@ export function audienceOf(r: BrandShows) {
 // Physical placement needs a live action set: running or awaiting renewal, and not animated.
 type Info = Omit<ShowInfo, "company"> & { company?: string | null };
 const animated = (i: Info | null) => /anim/i.test(i?.kind ?? "") || (i?.genres ?? []).some((g) => /anim|anime/i.test(g));
-export const live = (i: Info | null) => !!i && (i.status === "running" || i.status === "renewal pending") && !animated(i);
+export const live = (i: Info | null) =>
+  !!i && (i.status === "running" || i.status === "renewal pending") && filmingNow(i) && !animated(i);
 
 interface Candidate {
   name: string;
@@ -117,6 +120,7 @@ interface Candidate {
   specific: boolean;
   match: DemoMatch | null;
   chance: Chance;
+  fit: number;
 }
 
 /** Every show Qloo returned that is still filming and live action, rated for how realistic a free placement is. */
@@ -127,15 +131,12 @@ async function candidatesFor(data: BrandShows): Promise<{ list: Candidate[]; liv
   const list = ranked
     .map((r, i) => ({ r, info: infos[i] as Info | null, i }))
     .filter((x) => live(x.info) && allowsPlacement(x.info!.network))
-    .map(({ r, info, i }) => ({
-      name: info!.name,
-      rank: i + 1,
-      info: info!,
-      specific: r.specific,
-      match: known.get(r.id)?.match ?? null,
-      chance: chanceOf(info!.kind, info!.network),
-    }));
-  const sorted = [...list].sort((x, y) => TIER_ORDER[x.chance.tier] - TIER_ORDER[y.chance.tier] || x.rank - y.rank);
+    .map(({ r, info, i }) => {
+      const match = known.get(r.id)?.match ?? null;
+      const chance = chanceOf(info!.kind, info!.network);
+      return { name: info!.name, rank: i + 1, info: info!, specific: r.specific, match, chance, fit: fitScore(i + 1, ranked.length, match?.label ?? null, chance.tier) };
+    });
+  const sorted = [...list].sort((x, y) => y.fit - x.fit || TIER_ORDER[x.chance.tier] - TIER_ORDER[y.chance.tier]);
   return { list: sorted.slice(0, 10), liveCount: list.length, total: ranked.length };
 }
 
@@ -194,6 +195,7 @@ function showLine(c: Candidate) {
   return {
     show: c.name,
     chance: c.chance.label,
+    fit_out_of_100: c.fit,
     kind: c.info.kind,
     network: c.info.network,
     genres: c.info.genres,
@@ -341,6 +343,7 @@ export async function runPlan(brand: string, emit: (s: Step) => void): Promise<P
         send: w?.send ?? "",
         pitch: addressed(w?.pitch ?? "", p.recipient.greeting),
         chance: p.cand.chance,
+        fit: p.cand.fit,
         recipient: p.recipient,
         site: p.site,
       };
@@ -357,6 +360,7 @@ export async function runPlan(brand: string, emit: (s: Step) => void): Promise<P
       nextEpisode: c.info.nextEpisode,
       genres: c.info.genres,
       chance: c.chance,
+      fit: c.fit,
     })),
     moves: [],
     ads: {

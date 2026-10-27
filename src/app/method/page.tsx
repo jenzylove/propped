@@ -59,6 +59,8 @@ export default function MethodPage() {
         <Step n={6} title="Build the plan">
           <p style={p}>Product placement is only for shows that are running or waiting on a renewal, and only live action. Animated shows are left out. Propped checks every show Qloo returns, not just the top twelve.</p>
           <p style={p}><b>Likely yes:</b> unscripted shows, which dress real homes and kitchens and take free product often. <b>Worth a pitch:</b> smaller scripted shows. <b>Needs an ad buy:</b> big scripted shows on the major networks and streamers, which the agent can only pick when nothing more realistic is filming.</p>
+          <p style={p}>A show counts as still filming only if a new episode is scheduled or one aired in the last 18 months, because listings keep many finished streaming shows marked as running.</p>
+          <p style={p}><b>Fit, out of 100:</b> up to 40 points for how strongly Qloo ties the show to your brand, 30 for how close its audience is to your customers, and 30 for how realistic a free placement is.</p>
           <p style={p}>Each letter is addressed to the people who dress the set: the production designer when TVmaze lists one, care of the production company from Wikipedia.</p>
           <p style={p}>Ads are bought by genre, network and audience, because self serve platforms don’t sell single shows. Your shows are the reason we pick those genres and networks.</p>
           <div className="kicker" style={{ marginTop: 20 }}>Where to buy</div>

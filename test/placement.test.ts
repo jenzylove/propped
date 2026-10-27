@@ -43,3 +43,32 @@ describe("allowsPlacement", () => {
     expect(allowsPlacement(null)).toBe(true);
   });
 });
+
+import { filmingNow } from "@/lib/placement";
+describe("filmingNow", () => {
+  const now = Date.parse("2026-10-27T00:00:00Z");
+  it("trusts a scheduled episode", () => {
+    expect(filmingNow({ status: "running", nextEpisode: "2026-11-02", lastAired: null }, now)).toBe(true);
+  });
+  it("keeps shows that aired in the last 18 months", () => {
+    expect(filmingNow({ status: "running", nextEpisode: null, lastAired: "2026-05-03" }, now)).toBe(true);
+  });
+  it("drops streaming shows left marked running for years", () => {
+    expect(filmingNow({ status: "running", nextEpisode: null, lastAired: "2020-07-01" }, now)).toBe(false);
+    expect(filmingNow({ status: "renewal pending", nextEpisode: null, lastAired: "2024-01-31" }, now)).toBe(false);
+    expect(filmingNow({ status: "running", nextEpisode: null, lastAired: null }, now)).toBe(false);
+  });
+});
+
+import { fitScore } from "@/lib/placement";
+describe("fitScore", () => {
+  it("is 100 for the top ranked, same audience, likely set", () => {
+    expect(fitScore(1, 50, "the same people", "likely")).toBe(100);
+  });
+  it("drops for low rank, different crowd and an ad buy", () => {
+    expect(fitScore(50, 50, "different", "adbuy")).toBe(16);
+  });
+  it("treats an unknown audience as neutral", () => {
+    expect(fitScore(1, 50, null, "pitch")).toBe(73);
+  });
+});

@@ -1,5 +1,6 @@
 import "server-only";
 import { cleanCompany, mapStatus, type ShowStatus } from "./enrich-pure";
+import { filmingNow } from "./placement";
 
 export { cleanCompany, mapStatus };
 
@@ -14,6 +15,7 @@ export interface ShowInfo {
   url: string | null;
   premiered: string | null;
   nextEpisode: string | null;
+  lastAired: string | null;
   company: string | null;
 }
 
@@ -31,7 +33,7 @@ interface TvmazeShow {
   image?: { medium?: string; original?: string } | null;
   url?: string;
   premiered?: string;
-  _embedded?: { nextepisode?: { airdate?: string } };
+  _embedded?: { nextepisode?: { airdate?: string }; previousepisode?: { airdate?: string } };
 }
 interface WikiPage {
   revisions?: { slots?: { main?: { "*"?: string } }; "*"?: string }[];
@@ -89,7 +91,7 @@ export async function tvInfo(name: string): Promise<Omit<ShowInfo, "company"> | 
   if (tvCache.has(name)) return tvCache.get(name)!;
   let s: TvmazeShow | null;
   try {
-    s = await getJson<TvmazeShow>(`https://api.tvmaze.com/singlesearch/shows?q=${encodeURIComponent(name)}&embed=nextepisode`);
+    s = await getJson<TvmazeShow>(`https://api.tvmaze.com/singlesearch/shows?q=${encodeURIComponent(name)}&embed[]=nextepisode&embed[]=previousepisode`);
   } catch {
     return null;
   }
@@ -105,8 +107,11 @@ export async function tvInfo(name: string): Promise<Omit<ShowInfo, "company"> | 
         url: s.url ?? null,
         premiered: s.premiered ?? null,
         nextEpisode: s._embedded?.nextepisode?.airdate ?? null,
+        lastAired: s._embedded?.previousepisode?.airdate ?? null,
       }
     : null;
+  // A show "running" on TVmaze with nothing new in 18 months has stopped making episodes.
+  if (info && (info.status === "running" || info.status === "renewal pending") && !filmingNow(info)) info.status = "ended";
   tvCache.set(name, info);
   return info;
 }

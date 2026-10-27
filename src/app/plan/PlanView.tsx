@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { PLATFORMS } from "@/lib/platforms";
 import PitchBoard from "./PitchBoard";
+import { isSample } from "@/lib/samples";
 
 type Tier = "likely" | "pitch" | "adbuy";
 export interface PlanPlacement {
@@ -15,6 +16,7 @@ export interface PlanPlacement {
   send: string;
   pitch: string;
   chance?: { tier: Tier; label: string; why: string };
+  fit?: number;
   recipient?: { greeting: string; line: string; person: string | null; role: string | null; company: string | null };
   site?: string | null;
   declined?: boolean;
@@ -122,6 +124,7 @@ export function PlacementDrops({ placements }: { placements: PlanPlacement[]; br
                     <b style={{ color: "var(--orange)" }}>{p.replacedBy ? `Declined, swapped for ${p.replacedBy}` : "Declined"}</b>
                   ) : (
                     <>
+                      {typeof p.fit === "number" && <b style={{ color: "var(--ink)" }}>Fit {p.fit} · </b>}
                       {p.chance && <b style={{ color: TIER_COLOR[p.chance.tier] }}>{p.chance.label}</b>}
                       {p.chance && p.network ? " · " : ""}
                       {p.network}
@@ -202,6 +205,7 @@ export function PlanView({ plan: initial, board = true }: { plan: PlanData; boar
             planId={plan.id}
             shows={plan.placements.filter((p) => !p.declined).map((p) => p.show)}
             onNext={(r) => setPlan(r.plan as PlanData)}
+            locked={isSample(plan.id)}
           />
           {plan.moves && plan.moves.length > 0 && (
             <div style={{ marginTop: 28, maxWidth: 820 }}>

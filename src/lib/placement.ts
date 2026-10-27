@@ -15,6 +15,15 @@ const BIG = new Set(["abc", "nbc", "cbs", "fox", "the cw", "apple tv", "apple tv
 const NO_PLACEMENT = /^(bbc|pbs\b|cbc gem|abc iview|abc tv|sbs on demand)/i;
 export const allowsPlacement = (network: string | null) => !network || !NO_PLACEMENT.test(network.trim());
 
+const DAY = 86_400_000;
+/** TVmaze leaves streaming shows "running" for years. A show counts as filming only if a new episode is
+ *  scheduled or one aired in the last 18 months. */
+export function filmingNow(i: { status: string; nextEpisode: string | null; lastAired: string | null }, now = Date.now()) {
+  if (i.status === "ended") return false;
+  if (i.nextEpisode) return true;
+  return !!i.lastAired && now - Date.parse(`${i.lastAired}T00:00:00Z`) <= 548 * DAY;
+}
+
 export function chanceOf(kind: string | null, network: string | null): Chance {
   if (kind && UNSCRIPTED.test(kind)) {
     return { tier: "likely", label: "Likely yes", why: "Unscripted shows dress real homes, kitchens and kit, and often take free product from brands." };
@@ -26,6 +35,15 @@ export function chanceOf(kind: string | null, network: string | null): Chance {
 }
 
 export const TIER_ORDER: Record<Tier, number> = { likely: 0, pitch: 1, adbuy: 2 };
+
+/** One number per set, out of 100: how strongly Qloo ties the show to the brand (40), how close its
+ *  audience is to the brand's customers (30), and how realistic a free placement is (30). */
+export function fitScore(rank: number, total: number, audience: string | null, tier: Tier) {
+  const taste = 40 * (1 - (Math.max(1, rank) - 1) / Math.max(1, total));
+  const crowd = audience === "the same people" ? 30 : audience === "close" ? 21 : audience === "different" ? 9 : 15;
+  const odds = tier === "likely" ? 30 : tier === "pitch" ? 18 : 6;
+  return Math.round(taste + crowd + odds);
+}
 
 export interface Recipient {
   /** Who the letter opens with, e.g. "Dear Cabot McMullen and the set decoration team". */
