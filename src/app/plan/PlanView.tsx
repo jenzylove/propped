@@ -141,11 +141,15 @@ export function PlacementDrops({ placements }: { placements: PlanPlacement[]; br
                 <p style={{ margin: "0 0 14px", fontSize: 15 }}>
                   {p.site && (
                     <>
-                      <a href={p.site} target="_blank" rel="noopener noreferrer">{p.recipient.company ?? "Their"} website</a>
+                      <a href={p.site} target="_blank" rel="noopener noreferrer" style={{ color: "var(--green)", fontWeight: 700, textDecoration: "underline" }}>
+                        {p.recipient.company ?? "Their"} website ↗
+                      </a>
                       {" · "}
                     </>
                   )}
-                  <a href={officeSearch(p)} target="_blank" rel="noopener noreferrer">Find their production office</a>
+                  <a href={officeSearch(p)} target="_blank" rel="noopener noreferrer" style={{ color: "var(--green)", fontWeight: 700, textDecoration: "underline" }}>
+                    Find their production office ↗
+                  </a>
                 </p>
               </>
             )}
