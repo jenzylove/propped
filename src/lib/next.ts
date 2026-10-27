@@ -7,7 +7,8 @@ import { tvInfo } from "./enrich";
 import { addressed, contactFor, type Move, type Plan, type Placement } from "./plan";
 import type { Board } from "./board";
 
-const RULES = "Plain words, no dashes, no hyphenated words. Never invent facts about episodes, characters, people or the brand's history.";
+const RULES =
+  "Plain words, no dashes, no hyphenated words. Never invent facts about episodes, characters, people or the brand's history. Never mention ages, gender or audience data in a letter.";
 
 async function write<T>(prompt: string, maxTokens = 900): Promise<T> {
   const { message } = await chat(
