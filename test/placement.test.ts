@@ -72,3 +72,10 @@ describe("fitScore", () => {
     expect(fitScore(1, 50, null, "pitch")).toBe(73);
   });
 });
+
+describe("recipientOf with names that start with The", () => {
+  it("never writes the The", () => {
+    expect(recipientOf("The Reluctant Traveler", [], null, "Apple TV").line).toBe("The set decoration team, care of The Reluctant Traveler production team at Apple TV");
+    expect(recipientOf("Alone", [], "The Company Films", null).line).toBe("The set decoration team, care of The Company Films production office");
+  });
+});

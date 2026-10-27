@@ -58,11 +58,12 @@ export interface Recipient {
 export function recipientOf(show: string, crew: { name: string; role: string }[], company: string | null, network: string | null): Recipient {
   const lead = crew[0] ?? null;
   company = company ? company.split(",")[0].trim() : null;
-  const office = company ? `${company} production office` : network ? `the ${show} production team at ${network}` : `the ${show} production office`;
+  const the = (name: string) => (/^the\s/i.test(name) ? name : `the ${name}`);
+  const office = company ? `${company} production office` : network ? `${the(show)} production team at ${network}` : `${the(show)} production office`;
   if (lead) {
     return {
       greeting: `Dear ${lead.name} and the set decoration team`,
-      line: `${lead.name}, ${lead.role}, and the set decoration team, care of ${company ? `the ${office}` : office}`,
+      line: `${lead.name}, ${lead.role}, and the set decoration team, care of ${company ? the(office) : office}`,
       person: lead.name,
       role: lead.role,
       company,
@@ -70,7 +71,7 @@ export function recipientOf(show: string, crew: { name: string; role: string }[]
   }
   return {
     greeting: "Dear set decoration team",
-    line: `The set decoration team, care of ${company ? `the ${office}` : office}`,
+    line: `The set decoration team, care of ${company ? the(office) : office}`,
     person: null,
     role: null,
     company,
